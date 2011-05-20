@@ -1,33 +1,42 @@
 <!DOCTYPE html>
+<html>
 <head>
 	<title>Try Jasmine!</title>
 	<link rel="stylesheet" type="text/css" href="js/vendor/jasmine-1.0.2/jasmine.css" />	
-	<script type="text/javascript">
-		/* NBL.js (c) 2010 Berklee. Licensed under the MIT license. */
-		this.nbl={c:document,q:{},n:null,l:function(a){var b,c,x,y,z,s,l,i=j=0,m=this;m.h=m.c.head||m.c.body||m.h,m.i||(m.s=m.f=0,m.i=setInterval(function(){if(m.o<0||m.s==0)m.i=clearInterval(m.i),m.s>0&&m.f&&m.f(m.q);m.o--},m.o=50));if(a&&a.shift)while(i<a.length)b=a[i],c=a[i+1],x="function",y=typeof b,z=typeof c,l=z==x?c:y==x?b:m.n,y=="number"&&(m.o=b/50),y=="string"&&m.a([b],l),b.shift&&m.a([b.shift(),b],l),!m.f&&l&&(m.f=l),i++},a:function(a,b){var c,d=this,e=a[0].replace(/.+\/|\.min\.js|\.js|\?.+|\W/g,"");c=d.q[e]=d.c.createElement("script"),c.setAttribute("src",a[0]),c.onload=c.onreadystatechange=function(){var c=this,f=function(){var c=d,f=a[1];c.q[e]=!0,f&&c.l(f),b&&b(),c.s--};if(!c.readyState||/de|te/.test(c.readyState))c.onload=c.onreadystatechange=d.n,f()},d.s++,d.h.appendChild(c)}},
+	<link rel="stylesheet" type="text/css" href="css/vendor/css3buttons/css/css3buttons.css" />	
+	<link rel="stylesheet" type="text/css" href="css/try-it.css" />	
 
-		nbl.l(
-			['http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js',
-				['js/vendor/jasmine-1.0.2/jasmine.js', 
-					['js/vendor/jasmine-1.0.2/jasmine-html.js',
-						'js/vendor/jasmine-fixture-0.0.2.js',
-						'js/vendor/jasmine-jquery.js',
-						['js/try-it.js']
-					]
-				], 
-		]);	
-	</script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>	
+	<script type="text/javascript" src="js/try-it.js"></script>
 </head>	
 <body>
-	<div class="source-wrap">
-		<fieldset>
-			<legend>Try Jasmine!</legend>
-			<label for="specs">Specs</label>
-			<textarea class="source" id="specs"></textarea>
-			<label for="src">Source</label>
-			<textarea class="source" id="src"></textarea>
-		</fieldset>
+	<div class="body-wrap">
+		<div class="head-wrap">
+			<a class="try-it button">Try Jasmine!</a>
+		</div>
+		<div class="content-wrap">
+			<div class="source-wrap">
+				<label for="specs">Specs</label>
+				<textarea class="source" id="specs"></textarea>
+				<label for="src">Source</label>
+				<textarea class="source" id="src"></textarea>
+			</div>
+			<div class="runner-wrap">
+				Results
+				<div class="spec-runner"></div>
+			</div>
+		</div>
 	</div>
-	<input type="button" class="try-it button" value="Try it!"/>
-	<div id="spec-runner"></div>
+	<iframe id="sandbox" src="sandbox.html"></iframe>
+	<pre class="template" id="default-specs">
+describe('panda',function(){
+  it('is happy',function(){
+    expect(panda).toBe('happy');
+  });
+});
+	</pre>
+	<pre class="template" id="default-src">
+		panda = 'sad';
+	</pre>
 </body>
+</html>
