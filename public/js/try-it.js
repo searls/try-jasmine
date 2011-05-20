@@ -13,6 +13,7 @@
 		}
 		self.kill = function() {
 			$('#sandbox').get(0).src = $('#sandbox').attr('src');
+			self = $('#sandbox').get(0).contentWindow;
 		};		
 		return self;		
 	};
@@ -29,6 +30,9 @@
 		$('.spec-runner').html($('body > .jasmine_reporter'));
 		sandbox.kill();
 	};
+	
+	
+	//Eventy stuff
 	$('.try-it.button').live('click',function(e){
 		e.preventDefault();
 		tryIt();
@@ -36,6 +40,7 @@
 	$('body').live('keypress',function(e){
 		if(e.metaKey === true && e.keyCode === 13) {
 			//^ if you hit ctrl+Enter or cmd+Enter
+			e.preventDefault();
 			tryIt();
 		}
 	});

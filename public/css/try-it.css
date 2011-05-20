@@ -102,3 +102,7 @@ iframe {
 	font-size: .9em;
 	text-align: center;
 }
+
+.foot-wrap help {
+	display: none;
+}
