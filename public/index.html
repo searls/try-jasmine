@@ -13,10 +13,15 @@
 <body>
 	<div class="body-wrap">
 		<div class="head-wrap">
-			<div class="header">
-				<a class="try-it button" href="#">Try Jasmine!</a>
-				<br/>
-				<span>Mac: &#x2318;-Return, Windows: Ctrl-Enter </span>
+			<div class="head-top-wrap">
+				<div class="header">
+					<a class="try-it button" href="#">Try Jasmine!</a>
+					<br/>
+					<span>Mac: &#x2318;-Return, Windows: Ctrl-Enter </span>
+				</div>
+				<div class="clear-saved">
+					<a class="button negative" href="#">Clear saved specs</a>
+				</div>
 			</div>
 			<div class="links-summary">
 				included scripts
@@ -58,6 +63,7 @@
 		<div class="foot-wrap">
 			<div class="help">				
 				<ul>
+					<li>running specs will save them in localStorage so you don't lose them (a button will appear, allowing you to clear it)</li>
 					<li>hitting tab inserts two spaces</li>
 					<li>the macro buttons will insert text wherever your cursor was last located in the "Specs" field</li>					
 					<li>&#x2318;-Return doesn't work in Chrome, because Google is a unique butterfly with respect to Event.metaKey</li>
@@ -66,7 +72,14 @@
 			<div class="who">brought to you by <a href="http://twitter.com/searls">@searls</a> via <a href="http://pillartechnology.com">pillar</a></div>
 		</div>
 	</div>
+	
+	
+	<!--The sandbox in which your specs are run-->
 	<iframe id="sandbox" src="sandbox.html"></iframe>
+	
+	<a href="http://github.com/searls/try-jasmine"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://d3nwyuy0nl342s.cloudfront.net/img/71eeaab9d563c2b3c590319b398dd35683265e85/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork me on GitHub"></a>
+	
+	<!--Templates-->
 	<pre class="template" id="default-specs">
 describe('panda',function(){
   it('is happy',function(){
@@ -76,6 +89,6 @@ describe('panda',function(){
 	</pre>
 	<pre class="template" id="default-src">
 		panda = 'sad';
-	</pre>
+	</pre>	
 </body>
 </html>

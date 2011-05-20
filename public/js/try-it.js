@@ -5,6 +5,8 @@
 		
 		self.runSpecs = function() {
 			self.jasmine.getEnv().addReporter(new self.jasmine.TrivialReporter());
+			localStorage['specs'] = $('#specs').val();
+			localStorage['src'] = $('#src').val();			
 			self.eval($('#specs').val());
 			self.eval($('#src').val());				
 			self.jasmine.getEnv().execute();
@@ -15,13 +17,7 @@
 		};		
 		return self;		
 	};
-	
-	//Populate default templates
-	$(function(){
-		$('#specs').val($.trim($('#default-specs').html()));
-		$('#src').val($.trim($('#default-src').html()));
-	});
-	
+
 	window.tryIt = function() {
 		var sandbox = Sandbox();	
 		sandbox.runSpecs();
@@ -29,7 +25,22 @@
 		$('.spec-runner').html($('body > .jasmine_reporter'));
 	};
 	
-	
+	var setUpDefaultSpecs = function() {
+		var specs = $.trim($('#default-specs').html()),
+				src = $.trim($('#default-src').html());
+		if((localStorage['specs'] && specs !== localStorage['specs']) 
+				|| (localStorage['src'] && src !== localStorage['src'])) {
+			$('.clear-saved').show().delegate('.button','click',function() {
+				delete localStorage['specs'];
+				delete localStorage['src'];
+				$(this).hide();				
+				setUpDefaultSpecs();
+			});	
+		}
+		$('#specs').val(localStorage['specs'] || specs);
+		$('#src').val(localStorage['src'] || src);
+	}
+		
 	//Eventy stuff
 	$('.try-it.button').live('click',function(e){
 		e.preventDefault();
@@ -52,8 +63,12 @@
 	});
 	$('.button.insert').live('click',function(e) {
 		e.preventDefault();
-		$('#specs').insertAtCaret($(this).data('snippet')).focus();
-		
+		$('#specs').insertAtCaret($(this).data('snippet')).focus();		
+	});
+	
+	//Dom-ready
+	$(function(){
+		setUpDefaultSpecs();
 	});
 	
 })(jQuery);
