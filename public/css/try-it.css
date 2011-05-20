@@ -31,6 +31,12 @@ label,
 	margin: 0px 10px 5px 0px;
 }
 
+a.try-it.hint {
+	font-size: 14px;
+	margin-top: 20px;
+	margin-left: 70px;
+}
+
 .head-wrap .links-summary {
 	text-align: center;
 }
@@ -47,6 +53,10 @@ label,
 .content-wrap {
 	overflow: auto;
 	width: 100%;
+}
+
+.macros {
+	text-align: center;
 }
 
 .source-wrap {
@@ -101,8 +111,4 @@ iframe {
 	margin-top: 15px;
 	font-size: .9em;
 	text-align: center;
-}
-
-.foot-wrap help {
-	display: none;
 }

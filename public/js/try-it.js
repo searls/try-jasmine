@@ -2,9 +2,7 @@
 	//Define the little iframe sandbox
 	window.Sandbox = function(){
 		var self = $('#sandbox').get(0).contentWindow;
-		self.eval = function(source) {
-			self.document.write('<script>'+source+'<\/script>');
-		};
+		
 		self.runSpecs = function() {
 			self.jasmine.getEnv().addReporter(new self.jasmine.TrivialReporter());
 			self.eval($('#specs').val());
@@ -26,9 +24,9 @@
 	
 	window.tryIt = function() {
 		var sandbox = Sandbox();	
-		sandbox.runSpecs();		
-		$('.spec-runner').html($('body > .jasmine_reporter'));
+		sandbox.runSpecs();
 		sandbox.kill();
+		$('.spec-runner').html($('body > .jasmine_reporter'));
 	};
 	
 	
@@ -51,6 +49,11 @@
 				$(this).insertAtCaret('  ');	
 			}
 		}
+	});
+	$('.button.insert').live('click',function(e) {
+		e.preventDefault();
+		$('#specs').insertAtCaret($(this).data('snippet')).focus();
+		
 	});
 	
 })(jQuery);

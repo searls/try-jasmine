@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Try Jasmine!</title>
+	<title>Try Jasmine in your browser, because downloading a zip file is too much work!</title>
 	<link rel="stylesheet" type="text/css" href="js/vendor/jasmine-1.0.2/jasmine.css" />	
 	<link rel="stylesheet" type="text/css" href="css/vendor/css3buttons/css/css3buttons.css" />	
 	<link rel="stylesheet" type="text/css" href="css/try-it.css" />	
@@ -35,6 +35,14 @@
 		</div>
 		<div class="content-wrap">
 			<div class="source-wrap">
+				<div class="macros">
+					<span class="label">macros</span>
+					<a href="#" class="button insert" data-snippet="describe('Thing',function(){});">describe</a>
+					<a href="#" class="button insert" data-snippet="it('does something',function(){});">it</a>
+					<a href="#" class="button insert" data-snippet="expect(true).toBe(true);">expect</a>				
+					<a href="#" class="button insert" data-snippet="spyOn(object,'methodName');">spyOn</a>				
+					<a href="#" class="button insert" data-snippet="beforeEach(function(){});">beforeEach</a>
+				</div>
 				<label for="specs">Specs</label>
 				<textarea class="source" id="specs"></textarea>
 				<label for="src">Source</label>
@@ -42,16 +50,20 @@
 			</div>
 			<div class="runner-wrap">
 				<div class="label">Results</div>
-				<div class="spec-runner"></div>
+				<div class="spec-runner">
+					<a class="hint try-it button" href="#">Click "Try Jasmine!" to execute your specs</a>										
+				</div>
 			</div>
 		</div>
 		<div class="foot-wrap">
 			<div class="help">				
 				<ul>
-					<li>hitting tab will insert two spaces</li>
+					<li>hitting tab inserts two spaces</li>
+					<li>the macro buttons will insert text wherever your cursor was last located in the "Specs" field</li>					
+					<li>&#x2318;-Return doesn't work in Chrome, because Google is a unique butterfly with respect to Event.metaKey</li>
 				</ul>			
 			</div>
-			<div class="who">from <a href="http://twitter.com/searls">@searls</a> via <a href="http://pillartechnology.com">pillar</a></div>
+			<div class="who">brought to you by <a href="http://twitter.com/searls">@searls</a> via <a href="http://pillartechnology.com">pillar</a></div>
 		</div>
 	</div>
 	<iframe id="sandbox" src="sandbox.html"></iframe>
