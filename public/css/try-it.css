@@ -8,14 +8,41 @@ body {
 	margin: 0 auto;
 	background-color: #fff;
 	border: 3px solid #e1e1e1;
+	padding: 3px;
+}
+
+.head-wrap,
+.foot-wrap,
+label,
+.label {
+	color: #888;
 }
 
 .head-wrap {
-	padding-bottom: 20px;
+	padding: 10px 0px 25px 15px;	
 }
-.head-wrap a.button {
+
+.head-wrap .header {
+	margin-bottom: 20px;
+}
+
+.head-wrap a.try-it {
 	font-size: 25px;
+	margin: 0px 10px 5px 0px;
 }
+
+.head-wrap .links-summary {
+	text-align: center;
+}
+
+.head-wrap .links {
+	text-align: center;
+}
+
+.head-wrap .links a {
+	font-size: 1.1em;
+}
+
 
 .content-wrap {
 	overflow: auto;
@@ -25,16 +52,28 @@ body {
 .source-wrap {
 	clear: left;
 	float: left;
-	width: 450px;
+	width: 475px;
 	display: inline;
 }
 
 .runner-wrap {
 	float: right;
-	width: 450px;
+	width: 475px;
 	display: inline;
 }
 
+.spec-runner {
+	margin-top:10px;
+}
+
+a {
+	color: #4183C4;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
 
 textarea.source {
 	font: normal normal normal 99%/normal helvetica, arial, freesans, sans-serif;	
@@ -56,4 +95,10 @@ pre.template {
 
 iframe { 
 	display: none;
+}
+
+.foot-wrap .who {
+	margin-top: 15px;
+	font-size: .9em;
+	text-align: center;
 }

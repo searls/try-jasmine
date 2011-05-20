@@ -7,12 +7,31 @@
 	<link rel="stylesheet" type="text/css" href="css/try-it.css" />	
 
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>	
+	<script type="text/javascript" src="js/vendor/jquery-insert-at-caret.js"></script>
 	<script type="text/javascript" src="js/try-it.js"></script>
 </head>	
 <body>
 	<div class="body-wrap">
 		<div class="head-wrap">
-			<a class="try-it button">Try Jasmine!</a>
+			<div class="header">
+				<a class="try-it button" href="#">Try Jasmine!</a>
+				<br/>
+				<span>Mac: &#x2318;-Return, Windows: Ctrl-Enter </span>
+			</div>
+			<div class="links-summary">
+				included scripts
+			</div>
+			<div class="links">
+				<a href="https://github.com/pivotal/jasmine/wiki">jasmine</a>				
+				&#x2601;
+				<a href="http://jquery.com">jquery</a>				
+				&#x2601;				
+				<a href="https://github.com/velesin/jasmine-jquery">jasmine-jquery</a>
+				&#x2601;
+				<a href="https://github.com/searls/jasmine-fixture">jasmine-fixture</a>
+				&#x2601;
+				<a href="https://github.com/searls/jasmine-intro">an intro</a>
+			</div>
 		</div>
 		<div class="content-wrap">
 			<div class="source-wrap">
@@ -22,9 +41,17 @@
 				<textarea class="source" id="src"></textarea>
 			</div>
 			<div class="runner-wrap">
-				Results
+				<div class="label">Results</div>
 				<div class="spec-runner"></div>
 			</div>
+		</div>
+		<div class="foot-wrap">
+			<div class="help">				
+				<ul>
+					<li>hitting tab will insert two spaces</li>
+				</ul>			
+			</div>
+			<div class="who">from <a href="http://twitter.com/searls">@searls</a> via <a href="http://pillartechnology.com">pillar</a></div>
 		</div>
 	</div>
 	<iframe id="sandbox" src="sandbox.html"></iframe>
