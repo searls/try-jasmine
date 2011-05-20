@@ -1,7 +1,7 @@
 (function($){
 	//Define the little iframe sandbox
 	window.Sandbox = function(){
-		var self = frames[0];		
+		var self = $('#sandbox').get(0).contentWindow;
 		self.eval = function(source) {
 			self.document.write('<script>'+source+'<\/script>');
 		};
@@ -12,7 +12,7 @@
 			self.jasmine.getEnv().execute();
 		}
 		self.kill = function() {
-			$('iframe').get(0).src = $('iframe').attr('src');
+			$('#sandbox').get(0).src = $('#sandbox').attr('src');
 		};		
 		return self;		
 	};
@@ -24,10 +24,10 @@
 	});
 	
 	window.tryIt = function() {
-		var sandbox = Sandbox();
-		sandbox.runSpecs();
+		var sandbox = Sandbox();	
+		sandbox.runSpecs();		
+		$('.spec-runner').html($('body > .jasmine_reporter'));
 		sandbox.kill();
-		$('.spec-runner').html($('body > .jasmine_reporter'));		
 	};
 	$('.try-it.button').live('click',function(e){
 		e.preventDefault();
