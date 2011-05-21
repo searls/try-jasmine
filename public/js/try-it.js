@@ -52,13 +52,6 @@
 	};
 
 	var templates = {
-		goCoffee: function() {
-			if((this.stillDefault('specs') && this.stillDefault('src'))
-					|| confirm('overwrite your code with a sampling of CoffeeScript?')) {
-				$('#specs').val(this.getDefault('coffee-specs'));
-				$('#src').val(this.getDefault('coffee-src'));
-			}
-		},
 		stillDefault: function(name) {
 			return this.getDefault(name) === $('#'+name).val();
 		},
@@ -75,7 +68,14 @@
 		init: function() {
 			this.renderDefault('specs');
 			this.renderDefault('src');
-		}
+		},
+		goCoffee: function() {
+			if((this.stillDefault('specs') && this.stillDefault('src'))
+					|| confirm('overwrite your code with a sampling of CoffeeScript?')) {
+				$('#specs').val(this.getDefault('coffee-specs'));
+				$('#src').val(this.getDefault('coffee-src'));
+			}
+		}		
 	};
 		
 	//Eventy stuff
