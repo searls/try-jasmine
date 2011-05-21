@@ -152,6 +152,6 @@ iframe {
 	text-align: center;
 }
 
-.hidden {
+a.clear-saved.hidden, .hidden {
 	display:none;
 }
