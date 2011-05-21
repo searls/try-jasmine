@@ -7,7 +7,10 @@
 	<link rel="stylesheet" type="text/css" href="css/try-it.css" />	
 
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>	
-	<script type="text/javascript" src="js/vendor/jquery-insert-at-caret.js"></script>
+	<script type="text/javascript"	src="js/vendor/jquery-insert-at-caret.js"></script>
+        <script type="text/javascript" src="js/vendor/ace/ace.js"></script>
+        <script type="text/javascript" src="js/vendor/ace/theme-textmate.js"></script>
+        <script type="text/javascript" src="js/vendor/ace/mode-javascript.js"></script>
 	<script type="text/javascript" src="js/try-it.js"></script>
 	<script type="text/javascript">
 
@@ -62,7 +65,10 @@
 					<a href="#" class="button insert" data-snippet="beforeEach(function(){});">beforeEach</a>
 				</div>
 				<label for="specs">Specs</label>
-				<textarea class="source" id="specs"></textarea>
+                                <div id="editor-wrapper">
+                                        <div id="editor"></div>
+                                </div>
+                                <textarea class="source" id="specs"></textarea>
 				<label for="src">Source</label>
 				<textarea class="source" id="src"></textarea>
 			</div>
