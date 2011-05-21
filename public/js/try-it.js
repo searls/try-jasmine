@@ -4,7 +4,7 @@
 		var self = $('#sandbox').get(0).contentWindow;
 		
 		self.runSpecs = function() {
-			$('.flash').html('').hide();
+			hideErrors();
 			self.jasmine.getEnv().addReporter(new self.jasmine.TrivialReporter());
 			run('specs');
 			run('src');
@@ -21,10 +21,21 @@
 			try {
 				self.eval(script);
 			} catch(e) {
-				$('.flash').fadeIn().html("Uh oh, it looks like your JavaScript has a parse error!");
+				showError(name);
 				self.kill();
 			}
 		}
+		
+		var hideErrors = function() {
+			$('.flash').html('').hide();
+			$('textarea.error, .runner-wrap').removeClass('error');
+		};
+		
+		var showError = function(name) {
+			$('.flash').fadeIn().append("<li>Uh oh, it looks like your JavaScript "+(name === 'specs' ? 'specs have' : 'source has')+" a parse error!</li>");
+			$('.runner-wrap, #'+name).addClass('error');
+		};
+		
 		return self;		
 	};
 

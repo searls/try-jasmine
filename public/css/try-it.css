@@ -72,7 +72,10 @@ a.try-it.hint {
 	margin-top: 10px;
 	text-align: center;
 	color: #000;
-	background-color: #f99;
+	border: 1px solid #f00;
+	background-color: #fee;		
+	list-style-type: none;
+	display: none;
 }
 
 .content-wrap {
@@ -122,6 +125,17 @@ textarea.source {
 	height: 300px;
 	margin: 10px;
 	width: 97.5%;	
+}
+
+textarea.error {
+	border-color: #f00;
+	background-color: #fee;
+}
+
+.runner-wrap.error {
+	opacity : 0.4;
+	filter: alpha(opacity=40); // msie
+	background-color: #000;
 }
 
 pre.template {
