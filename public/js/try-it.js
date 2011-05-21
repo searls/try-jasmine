@@ -39,7 +39,7 @@
 		}
 		
 		var hideErrors = function() {
-			$('.flash').html('').hide();
+			$('.flash').html('').addClass('hidden');
 			$('textarea.error, .runner-wrap').removeClass('error');
 		};
 		
@@ -61,7 +61,7 @@
 		renderDefault: function(name) {
 			var script = this.getDefault(name);
 			if((localStorage[name] && script !== localStorage[name])) {
-				$('.clear-saved').show();
+				$('.clear-saved').removeClass('hidden');
 			}
 			$('#'+name).val(localStorage[name] || script);		
 		},
@@ -105,7 +105,7 @@
 	$('.clear-saved').live('click',function() {
 		delete localStorage['specs'];
 		delete localStorage['src'];
-		$(this).hide();				
+		$(this).addClass('hidden');				
 		templates.init();
 	});
 	$('.coffee.button').live('click',function(e){

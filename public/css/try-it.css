@@ -44,10 +44,6 @@ label,.label {
 	font-size: 18px;	
 }
 
-.head-wrap a.clear-saved.button {
-	display:none;
-}
-
 .head-wrap a.try-it {
 	font-size: 25px;
 	margin: 0px 10px 5px 0px;
@@ -78,7 +74,6 @@ a.try-it.hint {
 	border: 1px solid #f00;
 	background-color: #fee;		
 	list-style-type: none;
-	display: none;
 }
 
 .content-wrap {
@@ -155,4 +150,8 @@ iframe {
 .foot-wrap .who {
 	margin-top: 15px;
 	text-align: center;
+}
+
+.hidden {
+	display:none;
 }
