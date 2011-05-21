@@ -4,17 +4,27 @@
 		var self = $('#sandbox').get(0).contentWindow;
 		
 		self.runSpecs = function() {
+			$('.flash').html('').hide();
 			self.jasmine.getEnv().addReporter(new self.jasmine.TrivialReporter());
-			localStorage['specs'] = $('#specs').val();
-			localStorage['src'] = $('#src').val();			
-			self.eval($('#specs').val());
-			self.eval($('#src').val());				
+			run('specs');
+			run('src');
 			self.jasmine.getEnv().execute();
 		}
 		self.kill = function() {
 			$('#sandbox').get(0).src = $('#sandbox').attr('src');
 			self = $('#sandbox').get(0).contentWindow;
 		};		
+		
+		var run = function(name) {
+			var script = $('#'+name).val();
+			localStorage[name] = script;
+			try {
+				self.eval(script);
+			} catch(e) {
+				$('.flash').fadeIn().html("Uh oh, it looks like your JavaScript has a parse error!");
+				self.kill();
+			}
+		}
 		return self;		
 	};
 

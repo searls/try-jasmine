@@ -19,7 +19,7 @@ label,
 }
 
 .head-wrap {
-	padding: 10px 0px 25px 15px;	
+	padding: 10px 10px 25px 10px;	
 }
 
 .head-wrap .head-top-wrap {
@@ -68,6 +68,12 @@ a.try-it.hint {
 	font-size: 1.1em;
 }
 
+.head-wrap .flash {
+	margin-top: 10px;
+	text-align: center;
+	color: #000;
+	background-color: #f99;
+}
 
 .content-wrap {
 	overflow: auto;
