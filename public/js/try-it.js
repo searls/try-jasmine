@@ -1,4 +1,11 @@
 (function($){
+	window.tryIt = function() {
+		var sandbox = Sandbox();	
+		sandbox.runSpecs();
+		sandbox.kill();
+		$('.spec-runner').html($('body > .jasmine_reporter'));
+	};
+
 	//Define the little iframe sandbox
 	window.Sandbox = function(){
 		var self = $('#sandbox').get(0).contentWindow;
@@ -21,8 +28,13 @@
 			try {
 				self.eval(script);
 			} catch(e) {
-				showError(name);
-				self.kill();
+				//Well, maybe it's just coffeescript.
+				try {
+					self.eval(CoffeeScript.compile(script, { bare: true }));
+				} catch(coffeeError) {
+					showError(name);
+					self.kill();	
+				}
 			}
 		}
 		
@@ -39,28 +51,32 @@
 		return self;		
 	};
 
-	window.tryIt = function() {
-		var sandbox = Sandbox();	
-		sandbox.runSpecs();
-		sandbox.kill();
-		$('.spec-runner').html($('body > .jasmine_reporter'));
-	};
-	
-	var setUpDefaultSpecs = function() {
-		var specs = $.trim($('#default-specs').html()),
-				src = $.trim($('#default-src').html());
-		if((localStorage['specs'] && specs !== localStorage['specs']) 
-				|| (localStorage['src'] && src !== localStorage['src'])) {
-			$('.clear-saved').show().delegate('.button','click',function() {
-				delete localStorage['specs'];
-				delete localStorage['src'];
-				$(this).hide();				
-				setUpDefaultSpecs();
-			});	
+	var templates = {
+		goCoffee: function() {
+			if((this.stillDefault('specs') && this.stillDefault('src'))
+					|| confirm('overwrite your code with a sampling of CoffeeScript?')) {
+				$('#specs').val(this.getDefault('coffee-specs'));
+				$('#src').val(this.getDefault('coffee-src'));
+			}
+		},
+		stillDefault: function(name) {
+			return this.getDefault(name) === $('#'+name).val();
+		},
+		getDefault: function(name) {
+			return $.trim($('#default-'+name).text());
+		},
+		renderDefault: function(name) {
+			var script = this.getDefault(name);
+			if((localStorage[name] && script !== localStorage[name])) {
+				$('.clear-saved').show();
+			}
+			$('#'+name).val(localStorage[name] || script);		
+		},
+		init: function() {
+			this.renderDefault('specs');
+			this.renderDefault('src');
 		}
-		$('#specs').val(localStorage['specs'] || specs);
-		$('#src').val(localStorage['src'] || src);
-	}
+	};
 		
 	//Eventy stuff
 	$('.try-it.button').live('click',function(e){
@@ -68,7 +84,7 @@
 		tryIt();
 	});
 	$('body').live('keypress',function(e){
-		if(e.metaKey === true && e.keyCode === 13) {
+		if(e.which == 13 && (e.ctrlKey || e.metaKey)) {
 			//^ if you hit ctrl+Enter or cmd+Enter
 			e.preventDefault();
 			tryIt();
@@ -86,10 +102,20 @@
 		e.preventDefault();
 		$('#specs').insertAtCaret($(this).data('snippet')).focus();		
 	});
+	$('.clear-saved').live('click',function() {
+		delete localStorage['specs'];
+		delete localStorage['src'];
+		$(this).hide();				
+		templates.init();
+	});
+	$('.coffee.button').live('click',function(e){
+		e.preventDefault();
+		templates.goCoffee();
+	});
 	
 	//Dom-ready
 	$(function(){
-		setUpDefaultSpecs();
+		templates.init();
 	});
 	
 })(jQuery);

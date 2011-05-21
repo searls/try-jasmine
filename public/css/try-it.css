@@ -18,6 +18,10 @@ label,
 	color: #888;
 }
 
+label,.label {
+	font-size:1.1em;
+}
+
 .head-wrap {
 	padding: 10px 10px 25px 10px;	
 }
@@ -33,17 +37,16 @@ label,
 	margin-bottom: 20px;
 }
 
-.head-wrap .clear-saved {
+.head-wrap .page-tools {
 	float:right;
 	display: inline;	
 	margin-right: 20px;
-	display:none;
+	font-size: 18px;	
 }
 
-.head-wrap .clear-saved a.button {
-	font-size: 18px;
+.head-wrap a.clear-saved.button {
+	display:none;
 }
-	
 
 .head-wrap a.try-it {
 	font-size: 25px;
@@ -84,7 +87,9 @@ a.try-it.hint {
 }
 
 .macros {
-	text-align: center;
+	font-size: 0.9em;
+	color: #888;
+	float:right;
 }
 
 .source-wrap {

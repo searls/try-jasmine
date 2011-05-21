@@ -8,32 +8,21 @@
 
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>	
 	<script type="text/javascript" src="js/vendor/jquery-insert-at-caret.js"></script>
+	<script type="text/javascript" src="js/vendor/coffee-script.js"></script>
 	<script type="text/javascript" src="js/try-it.js"></script>
-	<script type="text/javascript">
-
-	  var _gaq = _gaq || [];
-	  _gaq.push(['_setAccount', 'UA-19328582-2']);
-	  _gaq.push(['_trackPageview']);
-
-	  (function() {
-	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	  })();
-
-	</script>
 </head>	
 <body>
 	<div class="body-wrap">
 		<div class="head-wrap">
 			<div class="head-top-wrap">
 				<div class="header">
-					<a class="try-it button" href="#">try jasmine!</a>
+					<a class="try-it big button" href="#">try jasmine!</a>
 					<br/>
 					<span>mac: &#x2318;-return, windows: ctrl-enter </span>
 				</div>
-				<div class="clear-saved">
-					<a class="button negative" href="#">Clear saved specs</a>
+				<div class="page-tools">
+					<a class="coffee button" href="#">try CoffeeScript!</a>					
+					<a class="clear-saved button negative" href="#">Clear saved specs</a>
 				</div>
 			</div>
 			<div class="links-summary">
@@ -46,6 +35,8 @@
 				&#x2601;				
 				<a href="https://github.com/velesin/jasmine-jquery">jasmine-jquery</a>
 				&#x2601;
+				<a href="http://jashkenas.github.com/coffee-script/">coffee-script</a>
+				&#x2601;			
 				<a href="https://github.com/searls/jasmine-fixture">jasmine-fixture</a>
 				&#x2601;
 				<a href="https://github.com/searls/jasmine-intro">an intro</a>
@@ -53,16 +44,16 @@
 			<div class="flash"></div>
 		</div>
 		<div class="content-wrap">
-			<div class="source-wrap">
+			<div class="source-wrap">	
+				<label for="specs">specs</label>
 				<div class="macros">
-					<span class="label">macros</span>
+					<span>macros</span>
 					<a href="#" class="button insert" data-snippet="describe('Thing',function(){});">describe</a>
 					<a href="#" class="button insert" data-snippet="it('does something',function(){});">it</a>
 					<a href="#" class="button insert" data-snippet="expect(true).toBe(true);">expect</a>				
 					<a href="#" class="button insert" data-snippet="spyOn(object,'methodName');">spyOn</a>				
 					<a href="#" class="button insert" data-snippet="beforeEach(function(){});">beforeEach</a>
 				</div>
-				<label for="specs">specs</label>
 				<textarea class="source" id="specs"></textarea>
 				<label for="src">source</label>
 				<textarea class="source" id="src"></textarea>
@@ -80,7 +71,7 @@
 					<li>running specs will save them in localStorage so you don't lose them (a button will appear, allowing you to clear it)</li>
 					<li>hitting tab inserts two spaces</li>
 					<li>the macro buttons will insert text wherever your cursor was last located in the "specs" field</li>					
-					<li>&#x2318;-Return doesn't work in Chrome, because Google is its own special butterfly with respect to Event.metaKey</li>
+					<li>in Chrome, &#x2318;-return doesn't work, but it works <a href="http://jashkenas.github.com/coffee-script/">over here</a>, so help would be appreciated</li>
 					<li>if you live in java-land, I wrote a <a href="http://github.com/searls/jasmine-maven-plugin">maven plugin</a> for running your Jasmine specs in continuous integration</li>
 				</ul>			
 			</div>
@@ -104,6 +95,26 @@ describe('panda',function(){
 	</pre>
 	<pre class="template" id="default-src">
 		panda = 'sad';
-	</pre>	
+	</pre>
+	<pre class="template coffee" id="default-coffee-specs">
+describe 'panda', ->
+  it 'is happy', ->
+    expect(panda).toBe('happy')
+	</pre>
+	<pre class="template coffee" id="default-coffee-src">
+panda = 'sad'
+	</pre>
+	
+	<script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-19328582-2']);
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+	</script>
 </body>
 </html>
