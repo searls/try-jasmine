@@ -81,6 +81,12 @@
 		e.preventDefault();
 		tryIt();
 	});
+  $('html, body').add(document.body).keydown(function(e){
+    if(e.which == 13 && (e.ctrlKey || e.metaKey)) {
+      e.preventDefault();
+      tryIt();
+    }
+  });
 	$('.source').live('keydown',function(e) {
 		if(e.keyCode === 9) { //TAB			
 			e.preventDefault();
@@ -104,7 +110,6 @@
 		e.preventDefault();
 		templates.goCoffee();
 	});
-	
 	//Dom-ready
 	$(function(){
 		templates.init();
