@@ -16,12 +16,7 @@
 			self.execute('specs');
 			self.execute('src');
 			self.jasmine.getEnv().execute();
-		}
-		self.kill = function() {
-			$('#sandbox').get(0).src = $('#sandbox').attr('src');
-			self = $('#sandbox').get(0).contentWindow;
-		};		
-		
+		};
 		self.execute = function(name) {
 			var script = $('#'+name).val();
 			localStorage[name] = script;
@@ -36,7 +31,10 @@
 					self.kill();	
 				}
 			}
-		}
+		};
+		self.kill = function() {
+			$('#sandbox').get(0).src = $('#sandbox').attr('src');
+		};
 		
 		var hideErrors = function() {
 			$('.flash').html('').hide();
@@ -95,7 +93,8 @@
 		e.preventDefault();
 		$('#specs').insertAtCaret($(this).data('snippet')).focus();		
 	});
-	$('.clear-saved').live('click',function() {
+	$('.clear-saved').live('click',function(e) {
+		e.preventDefault();
 		delete localStorage['specs'];
 		delete localStorage['src'];
 		$(this).hide();				

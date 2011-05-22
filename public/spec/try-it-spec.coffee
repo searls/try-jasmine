@@ -271,3 +271,85 @@ describe "templates", ->
         it "leaves src as-is", ->
           expect($src).toHaveValue('')
 
+describe "~ user interface events", ->
+  describe "clicking the 'try jasmine' button", ->
+    beforeEach ->
+      spyOn(window, "tryIt")
+      
+      $('<span class="try-it button"></span>').click()
+    
+    it "invokes tryIt", ->
+      expect(tryIt).toHaveBeenCalled()
+  
+  describe "hitting tab", ->
+    $field=null
+    beforeEach ->
+      spyOn($.fn, "insertAtCaret")
+      $field = $.jasmine.inject('<span class="source"></span>')      
+    
+    context "just tab", ->
+      beforeEach -> $field.trigger({ type: 'keydown', keyCode: 9 })
+      it "inserts two spaces", ->
+        expect($.fn.insertAtCaret).toHaveBeenCalledWith('  ')
+
+      it "inserts them on the source", ->
+        expect($.fn.insertAtCaret.mostRecentCall.object[0]).toBe($field[0])
+    
+    context "holding shift", ->
+      beforeEach -> $field.trigger({ type: 'keydown', keyCode: 9, shiftKey: true })
+      
+      it "does nothing", ->
+        expect($.fn.insertAtCaret).not.toHaveBeenCalled()
+      
+  describe "hitting a snippet button", ->
+    $button=snippet=null
+    beforeEach ->
+      snippet = '1337 codez'
+      $button = $("<span class='button insert' data-snippet='#{snippet}'></span>")
+      spyOn($.fn, "insertAtCaret").andCallThrough()
+      spyOn($.fn, "focus").andCallThrough()
+
+      $button.trigger('click')
+    
+    it "inserts into specs", ->
+      expect($.fn.insertAtCaret.mostRecentCall.object.selector).toBe('#specs')
+
+    it "inserts the snippet", ->
+      expect($.fn.insertAtCaret).toHaveBeenCalledWith(snippet)
+    
+    it "focuses on the specs", ->
+      expect($.fn.focus.mostRecentCall.object.selector).toBe('#specs')
+  
+  describe "clicking a clear-saved button", ->
+    $button=null
+    beforeEach ->
+      localStorage['specs'] = localStorage['src'] = 'a'
+      $button = $.jasmine.inject('<span class="clear-saved">b</span>')
+      spyOn(templates, "init")
+        
+      $button.trigger('click')
+    
+    it "clears stored specs", ->
+      expect(localStorage['specs']).not.toBeDefined()
+    
+    it "clears stored src", ->
+      expect(localStorage['src']).not.toBeDefined()
+      
+    it "hides the button", ->
+      expect($button).not.toBeVisible()
+    
+    it "re-initializes the template", ->
+      expect(templates.init).toHaveBeenCalled()
+  
+  describe "hitting the coffee button", ->
+    $button=null
+    beforeEach ->
+      spyOn(templates, "goCoffee")
+      $button = $('<span class="coffee button"></span>')
+    
+      $button.trigger('click')
+    
+    it "shows some coffee", ->
+      expect(templates.goCoffee).toHaveBeenCalled()
+    
+
