@@ -2,6 +2,12 @@
 <html>
 <head>	
 	<link rel="stylesheet" type="text/css" href="js/vendor/jasmine-1.0.2/jasmine.css" />		
+	<style type="text/css">
+		.ahoy {
+			font-size: 18px;
+			margin-bottom: 10px;
+		}
+	</style>
 	
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>	
 	<script type="text/javascript" src="js/vendor/jquery-insert-at-caret.js"></script>	
@@ -16,7 +22,8 @@
 	
 	<title>try-it.heroku.com specs</title>	
 </head>
-<body>	
+<body>
+	<div class="ahoy">Ahoy! These are the specs for <a href="http://try-jasmine.heroku.com">try-jasmine.heroku.com</a>. <a href="https://github.com/searls/try-jasmine/tree/master/public/spec">Peruse them</a> on Github.</div>
 	<script type="text/javascript">
 		jQuery(function($){
 			$.get('spec/try-it-spec.coffee',function(coffee) {
