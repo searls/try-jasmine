@@ -13,8 +13,8 @@
 		self.runSpecs = function() {
 			hideErrors();
 			self.jasmine.getEnv().addReporter(new self.jasmine.TrivialReporter());
-			run('specs');
-			run('src');
+			self.execute('specs');
+			self.execute('src');
 			self.jasmine.getEnv().execute();
 		}
 		self.kill = function() {
@@ -22,7 +22,7 @@
 			self = $('#sandbox').get(0).contentWindow;
 		};		
 		
-		var run = function(name) {
+		self.execute = function(name) {
 			var script = $('#'+name).val();
 			localStorage[name] = script;
 			try {
