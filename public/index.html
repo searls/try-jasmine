@@ -117,9 +117,7 @@ panda = 'sad'
 	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 	  })();
 
-
-
-    //we do this here instead of in try.js because Google Chrome is weird
+    //we do this here instead of in try-it.js because Google Chrome is weird
     $(document.body).keydown(function(e){
       if(e.which == 13 && (e.ctrlKey || e.metaKey)) {
         e.preventDefault();
