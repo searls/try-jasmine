@@ -351,5 +351,25 @@ describe "~ user interface events", ->
     
     it "shows some coffee", ->
       expect(templates.goCoffee).toHaveBeenCalled()
+  
+  describe "hitting enter", ->
+    beforeEach ->
+      spyOn(window, "tryIt")
     
-
+    context "just enter", ->
+      beforeEach -> $(document.body).trigger({type: 'keydown', which: 13})
+        
+      it "doesn't execute the specs", ->
+        expect(tryIt).not.toHaveBeenCalled()
+    
+    context "cmd-enter", ->
+      beforeEach -> $(document.body).trigger({type: 'keydown', which: 13, metaKey: true})
+        
+      it "executes the specs", ->
+        expect(tryIt).toHaveBeenCalled()
+      
+    context "ctrl-enter", ->
+      beforeEach -> $(document.body).trigger({type: 'keydown', which: 13, ctrlKey: true})
+      
+      it "executes the specs", ->
+        expect(tryIt).toHaveBeenCalled()
