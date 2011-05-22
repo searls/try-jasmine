@@ -14,13 +14,17 @@
 
 	<script type="text/javascript" src="js/try-it.js"></script>
 	
-	<script type="text/javascript" src="spec/try-it-spec.js"></script>
 	<title>try-it.heroku.com specs</title>	
 </head>
 <body>	
 	<script type="text/javascript">
-		jasmine.getEnv().addReporter(new self.jasmine.TrivialReporter());
-		jasmine.getEnv().execute();
+		jQuery(function($){
+			$.get('spec/try-it-spec.coffee',function(coffee) {
+				eval(CoffeeScript.compile(coffee,{bare:true}));
+				jasmine.getEnv().addReporter(new self.jasmine.TrivialReporter());
+				jasmine.getEnv().execute();
+			});			
+		});
 	</script>	
 </body>
 </html>
