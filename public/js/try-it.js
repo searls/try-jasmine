@@ -51,7 +51,7 @@
 		return self;		
 	};
 
-	var templates = {
+	window.templates = {
 		stillDefault: function(name) {
 			return this.getDefault(name) === $('#'+name).val();
 		},
