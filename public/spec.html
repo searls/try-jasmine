@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>	
+	<link rel="stylesheet" type="text/css" href="js/vendor/jasmine-1.0.2/jasmine.css" />		
+	
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>	
+	<script type="text/javascript" src="js/vendor/jasmine-1.0.2/jasmine.js"></script>
+	<script type="text/javascript" src="js/vendor/jasmine-1.0.2/jasmine-html.js"></script>
+	<script type="text/javascript" src="js/vendor/jasmine-fixture-0.0.2.js"></script>
+	<script type="text/javascript" src="js/vendor/jasmine-jquery.js"></script>
+	<script type="text/javascript" src="js/spec-helper.js"></script>
+	
+	<script type="text/javascript" src="js/try-it.js"></script>
+	
+	<script type="text/javascript" src="spec/try-it-spec.js"></script>
+	<title>try-it.heroku.com specs</title>	
+</head>
+<body>	
+	<script type="text/javascript">
+		jasmine.getEnv().addReporter(new self.jasmine.TrivialReporter());
+		jasmine.getEnv().execute();
+	</script>	
+</body>
+</html>
