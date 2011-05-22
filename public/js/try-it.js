@@ -83,13 +83,6 @@
 		e.preventDefault();
 		tryIt();
 	});
-	$('body').live('keypress',function(e){
-		if(e.which == 13 && (e.ctrlKey || e.metaKey)) {
-			//^ if you hit ctrl+Enter or cmd+Enter
-			e.preventDefault();
-			tryIt();
-		}
-	});
 	$('.source').live('keydown',function(e) {
 		if(e.keyCode === 9) { //TAB			
 			e.preventDefault();
