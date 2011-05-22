@@ -1,13 +1,7 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    coffee-script (2.2.0)
-      coffee-script-source
-      execjs
-    coffee-script-source (1.1.1)
     configuration (1.2.0)
-    execjs (1.0.0)
-      multi_json (~> 1.0)
     heroku (2.1.4)
       launchy (>= 0.3.2)
       rest-client (~> 1.6.1)
@@ -16,10 +10,7 @@ GEM
       configuration (>= 0.0.5)
       rake (>= 0.8.1)
     mime-types (1.16)
-    multi_json (1.0.2)
     rack (1.2.2)
-    rack-coffee (0.9.1)
-      rack
     rake (0.9.0)
     rest-client (1.6.1)
       mime-types (>= 1.16)
@@ -33,7 +24,5 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  coffee-script
   heroku
-  rack-coffee
   sinatra
