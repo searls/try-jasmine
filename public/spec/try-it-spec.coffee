@@ -1,3 +1,13 @@
+ogSpecs=ogSrc=null
+beforeEach ->
+  ogSpecs=localStorage['specs'] if localStorage['specs']
+  ogSrc=localStorage['src'] if localStorage['src']
+
+afterEach ->
+  localStorage['specs'] = ogSpecs if ogSpecs
+  localStorage['src'] = ogSrc if ogSrc
+
+
 describe ".tryIt", ->
   $specRunner=null
   beforeEach ->
