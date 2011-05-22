@@ -84,6 +84,7 @@ a.try-it.hint {
 .content-wrap {
 	overflow: auto;
 	width: 100%;
+	overflow: hidden;
 }
 
 .macros {
