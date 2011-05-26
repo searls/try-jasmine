@@ -10,6 +10,8 @@
 	<script type="text/javascript" src="js/vendor/jquery-insert-at-caret.js"></script>
 	<script type="text/javascript" src="js/vendor/coffee-script.js"></script>
 	<script type="text/javascript" src="js/try-it.js"></script>
+         <script type="text/javascript" src="js/vendor/ace/ace.js"></script>
+       <script type="text/javascript" src="js/vendor/ace/mode-javascript.js"></script>
 </head>	
 <body>
 	<div class="body-wrap">
@@ -54,8 +56,14 @@
 					<a href="#" class="button insert" data-snippet="spyOn(object,'methodName');">spyOn</a>				
 					<a href="#" class="button insert" data-snippet="beforeEach(function(){});">beforeEach</a>
 				</div>
+                                <div id="spec-editor-wrapper" class="editor-wrapper">
+                                        <div id="spec-editor" class="editor"></div>
+                                </div>
 				<textarea class="source" id="specs"></textarea>
 				<label for="src">source</label>
+                                <div id="source-editor-wrapper" class="editor-wrapper">
+                                        <div id="source-editor" class="editor"></div>
+                                </div>
 				<textarea class="source" id="src"></textarea>
 			</div>
 			<div class="runner-wrap">

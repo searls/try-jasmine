@@ -1,4 +1,7 @@
 (function($){
+        var specEditor;
+        var sourceEditor;
+
 	window.tryIt = function() {
 		var sandbox = Sandbox();	
 		sandbox.runSpecs();
@@ -56,16 +59,16 @@
 		getDefault: function(name) {
 			return $.trim($('#default-'+name).text());
 		},
-		renderDefault: function(name) {
+		renderDefault: function(name, editor) {
 			var script = this.getDefault(name);
 			if((localStorage[name] && script !== localStorage[name])) {
 				$('.clear-saved').show().css('display','inline-block');
 			}
-			$('#'+name).val(localStorage[name] || script);		
+                        editor.getSession().setValue(localStorage[name] || script);	
 		},
 		init: function() {
-			this.renderDefault('specs');
-			this.renderDefault('src');
+			this.renderDefault('specs', specEditor);
+			this.renderDefault('src', sourceEditor);
 		},
 		goCoffee: function() {
 			if((this.stillDefault('specs') && this.stillDefault('src'))
@@ -97,7 +100,7 @@
 	});
 	$('.button.insert').live('click',function(e) {
 		e.preventDefault();
-		$('#specs').insertAtCaret($(this).data('snippet')).focus();		
+                specEditor.insert($(this).data('snippet'));		
 	});
 	$('.clear-saved').live('click',function(e) {
 		e.preventDefault();
@@ -110,8 +113,22 @@
 		e.preventDefault();
 		templates.goCoffee();
 	});
+
+       var setupCodeBoxes = function(){
+                specEditor = ace.edit("spec-editor");
+                specEditor.setTheme("ace/theme/textmate");
+                var JavaScriptMode = require("ace/mode/javascript").Mode;
+                specEditor.getSession().setMode(new JavaScriptMode());
+                $('#specs').hide();
+
+                sourceEditor = ace.edit("source-editor");
+                sourceEditor.setTheme("ace/theme/textmate");
+                sourceEditor.getSession().setMode(new JavaScriptMode());
+                $('#src').hide();
+       }
 	//Dom-ready
 	$(function(){
+                setupCodeBoxes();
 		templates.init();
 	});
 	
