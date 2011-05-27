@@ -16,12 +16,12 @@
 		self.runSpecs = function() {
 			hideErrors();
 			self.jasmine.getEnv().addReporter(new self.jasmine.TrivialReporter());
-			self.execute('specs');
-			self.execute('src');
+			self.execute(specEditor);
+			self.execute(sourceEditor);
 			self.jasmine.getEnv().execute();
 		};
-		self.execute = function(name) {
-			var script = $('#'+name).val();
+		self.execute = function(editor) {
+                        var script = editor.getSession().getValue();
 			localStorage[name] = script;
 			try {
 				self.eval(script);
@@ -73,8 +73,9 @@
 		goCoffee: function() {
 			if((this.stillDefault('specs') && this.stillDefault('src'))
 					|| confirm('overwrite your code with a sampling of CoffeeScript?')) {
-				$('#specs').val(this.getDefault('coffee-specs'));
-				$('#src').val(this.getDefault('coffee-src'));
+                                switchToCoffeeScriptMode();
+                                specEditor.getSession().setValue(this.getDefault('coffee-specs'));
+                                sourceEditor.getSession().setValue(this.getDefault('coffee-src'));  
 			}
 		}		
 	};
@@ -125,6 +126,12 @@
                 sourceEditor.setTheme("ace/theme/textmate");
                 sourceEditor.getSession().setMode(new JavaScriptMode());
                 $('#src').hide();
+       }
+
+       var switchToCoffeeScriptMode = function(){
+                var CoffeeScriptMode = require("ace/mode/coffee").Mode;
+                specEditor.getSession().setMode(new CoffeeScriptMode());
+                sourceEditor.getSession().setMode(new CoffeeScriptMode());
        }
 	//Dom-ready
 	$(function(){
