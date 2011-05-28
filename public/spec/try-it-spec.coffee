@@ -33,7 +33,7 @@ describe ".tryIt", ->
     expect($specRunner).toContain('.jasmine_reporter')
 
 describe "Sandbox", ->
-  iframe=iframeWindow=sandbox=jsmin=null
+  iframe=iframeWindow=sandbox=jsmin=$specEditor=$sourceEditor=null
   beforeEach ->
     iframeWindow = {
       eval: jasmine.createSpy('.eval'),
@@ -49,8 +49,16 @@ describe "Sandbox", ->
     iframe = { contentWindow: iframeWindow}
     spyOn($.fn, "get").andReturn(iframe)
     jsmin = iframeWindow.jasmine
+    $.jasmine.inject('<div id="spec-editor"></div>');
+    $.jasmine.inject('<div id="source-editor"></div>');
+    codeBoxes.setupCodeBoxes()
+    $specEditor = codeBoxes.getSpecEditor()
+    $sourceEditor = codeBoxes.getSourceEditor()
 
     sandbox = Sandbox()
+
+
+
 
   describe "#runSpecs", ->
     $flash=$textareas=$runner=null
@@ -59,6 +67,7 @@ describe "Sandbox", ->
       $flash = $.jasmine.inject('<div class="flash">Stuff</div>')
       $textareas = $.jasmine.inject('<textarea class="error"></textarea>')
       $runner = $.jasmine.inject('<div class="runner-wrap error"></div>')
+
 
       sandbox.runSpecs()
 
@@ -78,10 +87,10 @@ describe "Sandbox", ->
       expect(jsmin.getEnv().addReporter.mostRecentCall.args[0]).toEqual(new jsmin.TrivialReporter())
 
     it "executes 'specs'", ->
-      expect(sandbox.execute).toHaveBeenCalledWith('specs')
+      expect(sandbox.execute).toHaveBeenCalledWith($specEditor)
 
     it "executes 'src", ->
-      expect(sandbox.execute).toHaveBeenCalledWith('src')
+      expect(sandbox.execute).toHaveBeenCalledWith($sourceEditor)
 
     it "executes jasmine", ->
       expect(jsmin.getEnv().execute).toHaveBeenCalled()
@@ -90,15 +99,17 @@ describe "Sandbox", ->
     $flash=$textarea=$runner=name=null
     beforeEach ->
       name = 'some-script'
-      $textarea = $.jasmine.inject("<input id='#{name}' value='Panda Script'/>")
+      $specEditor.getSession().setValue(name)
+      $sourceEditor.getSession().setValue("Panda Script")
       $flash = $.jasmine.inject('<div class="flash"></div>').hide()
       $runner = $.jasmine.inject('<div class="runner-wrap"></div>')
 
     context "when all is well", ->
-      beforeEach -> sandbox.execute(name)
+      beforeEach ->
+        sandbox.execute($specEditor)
 
       it "evals the script in the textarea", ->
-        expect(iframeWindow.eval).toHaveBeenCalledWith($('#'+name).val())
+        expect(iframeWindow.eval).toHaveBeenCalledWith(name)
 
 
     context "when eval as JS fails", ->
@@ -107,14 +118,15 @@ describe "Sandbox", ->
         spyOn(CoffeeScript, "compile").andReturn('coffee!')
         spyOn($.fn, "fadeIn").andCallThrough()
         spyOn(sandbox, "kill")
+        $specEditor.getSession().setValue("blah")
 
-        sandbox.execute(name)
+        sandbox.execute($specEditor)
 
-      it "compiles the script to CoffeeScript", ->
-        expect(CoffeeScript.compile).toHaveBeenCalledWith($textarea.val(),{bare:on})
+        it "compiles the script to CoffeeScript", ->
+         expect(CoffeeScript.compile).toHaveBeenCalledWith("blah",{bare:on})
 
-      it "evals the compiled CoffeeScript", ->
-        expect(iframeWindow.eval).toHaveBeenCalledWith('coffee!')
+        it "evals the compiled CoffeeScript", ->
+          expect(iframeWindow.eval).toHaveBeenCalledWith('coffee!')
 
       context "when eval as JS & CoffeeScript both fail", ->
         it "shows the error message box", ->
@@ -157,9 +169,7 @@ describe "templates", ->
   describe ".init", ->
     beforeEach ->
       spyOn(templates, "renderDefault")
-      $.jasmine.inject("<div id='spec-editor'></div>")
-      $.jasmine.inject("<div id='source-editor'></div>")
-      setupCodeBoxes()
+
 
       templates.init()
 

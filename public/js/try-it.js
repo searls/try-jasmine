@@ -74,7 +74,7 @@
 		goCoffee: function() {
 			if((this.stillDefault('specs') && this.stillDefault('src'))
 					|| confirm('overwrite your code with a sampling of CoffeeScript?')) {
-                                switchToCoffeeScriptMode();
+                                codeBoxes.switchToCoffeeScriptMode();
                                 specEditor.getSession().setValue(this.getDefault('coffee-specs'));
                                 sourceEditor.getSession().setValue(this.getDefault('coffee-src'));  
 			}
@@ -115,33 +115,41 @@
 		e.preventDefault();
 		templates.goCoffee();
 	});
-
-       var setupCodeBoxes = function(){
-                if ($('#spec-editor').length){
-                        specEditor = ace.edit("spec-editor");
-                        specEditor.setTheme("ace/theme/textmate");
-                        var JavaScriptMode = require("ace/mode/javascript").Mode;
-                        specEditor.getSession().setMode(new JavaScriptMode());
-                        $('#specs').hide();
-                }
+       window.codeBoxes = {
+         setupCodeBoxes: function(){ if ($('#spec-editor').length){
+                specEditor = ace.edit("spec-editor");
+                specEditor.setTheme("ace/theme/textmate"); var
+                JavaScriptMode = require("ace/mode/javascript").Mode;
+                specEditor.getSession().setMode(new JavaScriptMode());
+                $('#specs').hide(); }
                
                 if ($('#source-editor').length){
                         sourceEditor = ace.edit("source-editor");
                         sourceEditor.setTheme("ace/theme/textmate");
-                        sourceEditor.getSession().setMode(new JavaScriptMode());
-                        $('#src').hide();
-                }
+                        sourceEditor.getSession().setMode(new
+                        JavaScriptMode()); $('#src').hide();
+                } 
+          },
+         switchToCoffeeScriptMode: function(){
+         var CoffeeScriptMode = require("ace/mode/coffee").Mode;
+                specEditor.getSession().setMode(new CoffeeScriptMode());
+                sourceEditor.getSession().setMode(new CoffeeScriptMode());
+         },
+         
+         getSpecEditor: function(){
+           return specEditor;
+         },
+
+         getSourceEditor: function(){
+           return sourceEditor;
+         }
                 
        }
 
-       var switchToCoffeeScriptMode = function(){
-                var CoffeeScriptMode = require("ace/mode/coffee").Mode;
-                specEditor.getSession().setMode(new CoffeeScriptMode());
-                sourceEditor.getSession().setMode(new CoffeeScriptMode());
-       }
+
 	//Dom-ready
 	$(function(){
-                setupCodeBoxes();
+                codeBoxes.setupCodeBoxes();
 		templates.init();
 	});
 	
