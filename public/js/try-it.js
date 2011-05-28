@@ -64,6 +64,7 @@
 			if((localStorage[name] && script !== localStorage[name])) {
 				$('.clear-saved').show().css('display','inline-block');
 			}
+                        if (!editor) {return;}
                         editor.getSession().setValue(localStorage[name] || script);	
 		},
 		init: function() {
@@ -116,16 +117,21 @@
 	});
 
        var setupCodeBoxes = function(){
-                specEditor = ace.edit("spec-editor");
-                specEditor.setTheme("ace/theme/textmate");
-                var JavaScriptMode = require("ace/mode/javascript").Mode;
-                specEditor.getSession().setMode(new JavaScriptMode());
-                $('#specs').hide();
-
-                sourceEditor = ace.edit("source-editor");
-                sourceEditor.setTheme("ace/theme/textmate");
-                sourceEditor.getSession().setMode(new JavaScriptMode());
-                $('#src').hide();
+                if ($('#spec-editor').length){
+                        specEditor = ace.edit("spec-editor");
+                        specEditor.setTheme("ace/theme/textmate");
+                        var JavaScriptMode = require("ace/mode/javascript").Mode;
+                        specEditor.getSession().setMode(new JavaScriptMode());
+                        $('#specs').hide();
+                }
+               
+                if ($('#source-editor').length){
+                        sourceEditor = ace.edit("source-editor");
+                        sourceEditor.setTheme("ace/theme/textmate");
+                        sourceEditor.getSession().setMode(new JavaScriptMode());
+                        $('#src').hide();
+                }
+                
        }
 
        var switchToCoffeeScriptMode = function(){
