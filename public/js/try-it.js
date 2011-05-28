@@ -1,8 +1,9 @@
 (function($){
 	window.tryIt = function() {
-		$('.spec-runner').html('');
+		$('.spec-runner').html($('.loading.template').html());
 		$('#sandbox').remove();
 		$($('.sandbox.template').html()).appendTo('body').load(function() {
+			$('.spec-runner').html('');
 			Sandbox().runSpecs();
 		});
 	};

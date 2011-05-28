@@ -105,6 +105,10 @@ a.try-it.hint {
 	margin-top:10px;
 }
 
+.load-spin {
+	text-align: center;
+}
+
 a {
 	color: #4183C4;
 	text-decoration: none;

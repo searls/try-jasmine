@@ -13,6 +13,7 @@ describe ".tryIt", ->
   beforeEach ->
     spyOn($.fn, "load").andCallFake((f) -> loadHandler = f)
     previousSandboxNode = $.jasmine.inject('<div id="sandbox">blah</div>')[0]    
+    $.jasmine.inject('<div class="template loading"><div id="someLoading"></div></div>')
     $.jasmine.inject('<div class="template sandbox"><div id="someSandboxIframe"></div></div>')
     $specRunner = $.jasmine.inject('<div class="spec-runner">blarg</div>')
     
@@ -24,15 +25,18 @@ describe ".tryIt", ->
   it "removes the old sandbox", ->
     expect($(previousSandboxNode)).not.toBeVisible()  
     
-  it "empties the spec results container", ->
-    expect($specRunner).toHaveHtml('');  
-    
+  it "appends a loading template to the spec-runner", ->
+    expect($specRunner).toContain('#someLoading')  
+        
   describe "the load handler", ->
     beforeEach ->
       spyOn(window, "Sandbox").andReturn({
         runSpecs: jasmine.createSpy('#runSpecs')
       })
       loadHandler()
+    
+    it "empties the spec results container", ->
+      expect($specRunner).toHaveHtml('');  
           
     it "runs specs", ->
       expect(Sandbox().runSpecs).toHaveBeenCalled()
