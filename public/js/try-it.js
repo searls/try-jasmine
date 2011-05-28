@@ -1,9 +1,9 @@
 (function($){
 	window.tryIt = function() {
+		$('.spec-runner').html('');
 		var sandbox = Sandbox();	
 		sandbox.runSpecs();
 		sandbox.kill();
-		$('.spec-runner').html($('body > .jasmine_reporter'));
 	};
 
 	//Define the little iframe sandbox
@@ -12,7 +12,10 @@
 		
 		self.runSpecs = function() {
 			hideErrors();
-			self.jasmine.getEnv().addReporter(new self.jasmine.TrivialReporter());
+			self.jasmine.getEnv().addReporter(new self.jasmine.TrivialReporter({
+				location: window.document.location,
+				body: $('.spec-runner')[0]
+			}));
 			self.execute('specs');
 			self.execute('src');
 			self.jasmine.getEnv().execute();

@@ -15,30 +15,26 @@ describe ".tryIt", ->
       runSpecs: jasmine.createSpy('#runSpecs'),
       kill: jasmine.createSpy('#kill')
     })
-    $specRunner = $.jasmine.inject('<div class="spec-runner"></div>')
+    $specRunner = $.jasmine.inject('<div class="spec-runner">blarg</div>')
     
     tryIt()
   
-  afterEach ->
-    #heh, put the spec display back where it belongs.
-    $specRunner.find('.jasmine_reporter').appendTo('body')
+  it "empties the spec results container", ->
+    expect($specRunner).toHaveHtml('');  
     
   it "runs specs", ->
     expect(Sandbox().runSpecs).toHaveBeenCalled()
   
   it "kills the sandbox", ->
     expect(Sandbox().kill).toHaveBeenCalled()
-  
-  it "moves the jasmine reporter to the spec runner container", ->
-    expect($specRunner).toContain('.jasmine_reporter')
-  
+
 describe "Sandbox", ->
   iframe=iframeWindow=sandbox=jsmin=null
   beforeEach ->
     iframeWindow = {
       eval: jasmine.createSpy('.eval'),
       jasmine: {
-        TrivialReporter: -> @trivialReporter='Yup!'
+        TrivialReporter: (config) -> config
         env: {
           execute: jasmine.createSpy('#execute'),
           addReporter: jasmine.createSpy('#addReporter')
@@ -53,12 +49,13 @@ describe "Sandbox", ->
     sandbox = Sandbox()
 
   describe "#runSpecs", ->
-    $flash=$textareas=$runner=null
+    $flash=$textareas=$runner=$specRunner=null
     beforeEach ->
       spyOn(sandbox, "execute")
       $flash = $.jasmine.inject('<div class="flash">Stuff</div>')
       $textareas = $.jasmine.inject('<textarea class="error"></textarea>')
       $runner = $.jasmine.inject('<div class="runner-wrap error"></div>')
+      $specRunner = $.jasmine.inject('<div class="spec-runner"></div>');
       
       sandbox.runSpecs()
     
@@ -75,7 +72,10 @@ describe "Sandbox", ->
       expect($runner).not.toHaveClass('error')
 
     it "adds a trivial reporter to the jasmine environment", ->
-      expect(jsmin.getEnv().addReporter.mostRecentCall.args[0]).toEqual(new jsmin.TrivialReporter())
+      expect(jsmin.getEnv().addReporter.mostRecentCall.args[0]).toEqual(new jsmin.TrivialReporter({
+        location: window.document.location,
+        body: $specRunner[0]
+      }))
     
     it "executes 'specs'", ->
       expect(sandbox.execute).toHaveBeenCalledWith('specs')
