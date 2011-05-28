@@ -9,25 +9,37 @@ afterEach ->
 
 
 describe ".tryIt", ->
-  $specRunner=null
+  $specRunner=previousSandboxNode=loadHandler=null
   beforeEach ->
-    spyOn(window, "Sandbox").andReturn({
-      runSpecs: jasmine.createSpy('#runSpecs'),
-      kill: jasmine.createSpy('#kill')
-    })
+    spyOn($.fn, "load").andCallFake((f) -> loadHandler = f)
+    previousSandboxNode = $.jasmine.inject('<div id="sandbox">blah</div>')[0]    
+    $.jasmine.inject('<div class="template sandbox"><div id="someSandboxIframe"></div></div>')
     $specRunner = $.jasmine.inject('<div class="spec-runner">blarg</div>')
     
     tryIt()
   
+  it "apends the iframe template to the body", ->
+    expect($('body > #someSandboxIframe')).toExist()  
+  
+  it "removes the old sandbox", ->
+    expect($(previousSandboxNode)).not.toBeVisible()  
+    
   it "empties the spec results container", ->
     expect($specRunner).toHaveHtml('');  
     
-  it "runs specs", ->
-    expect(Sandbox().runSpecs).toHaveBeenCalled()
+  describe "the load handler", ->
+    beforeEach ->
+      spyOn(window, "Sandbox").andReturn({
+        runSpecs: jasmine.createSpy('#runSpecs')
+      })
+      loadHandler()
+          
+    it "runs specs", ->
+      expect(Sandbox().runSpecs).toHaveBeenCalled()
+    
+  afterEach ->
+    $('#someSandboxIframe').remove()
   
-  it "kills the sandbox", ->
-    expect(Sandbox().kill).toHaveBeenCalled()
-
 describe "Sandbox", ->
   iframe=iframeWindow=sandbox=jsmin=null
   beforeEach ->
@@ -102,13 +114,16 @@ describe "Sandbox", ->
 
         
     context "when eval as JS fails", ->
+      thrown=null
       beforeEach ->
         iframeWindow.eval.andThrow(':(')
         spyOn(CoffeeScript, "compile").andReturn('coffee!')
         spyOn($.fn, "fadeIn").andCallThrough()
-        spyOn(sandbox, "kill")
 
-        sandbox.execute(name)
+        try
+          sandbox.execute(name)
+        catch e
+          thrown = e        
       
       it "compiles the script to CoffeeScript", ->
         expect(CoffeeScript.compile).toHaveBeenCalledWith($textarea.val(),{bare:on})
@@ -132,18 +147,10 @@ describe "Sandbox", ->
         it "adds the error class to the script textarea", ->
           expect($textarea).toHaveClass('error')
           
-        it "kills the sandbox", ->
-          expect(sandbox.kill).toHaveBeenCalled()
-
-  describe "#kill", ->
-    beforeEach ->
-      $.jasmine.inject('<div id="sandbox" src="woah"></div>')
-      
-      sandbox.kill()
-    
-    it "resets the src attribute on the iframeWindow", ->
-      expect(iframe.src).toBe('woah')
-    
+        it "throws the error", ->
+          expect(thrown).toBe(':(')
+        
+              
 describe "templates", ->
   $textarea=name=script=$default=null
   beforeEach ->

@@ -1,9 +1,10 @@
 (function($){
 	window.tryIt = function() {
 		$('.spec-runner').html('');
-		var sandbox = Sandbox();	
-		sandbox.runSpecs();
-		sandbox.kill();
+		$('#sandbox').remove();
+		$($('.sandbox.template').html()).appendTo('body').load(function() {
+			Sandbox().runSpecs();
+		});
 	};
 
 	//Define the little iframe sandbox
@@ -31,12 +32,9 @@
 					self.eval(CoffeeScript.compile(script, { bare: true }));
 				} catch(coffeeError) {
 					showError(name);
-					self.kill();	
+					throw coffeeError;
 				}
 			}
-		};
-		self.kill = function() {
-			$('#sandbox').get(0).src = $('#sandbox').attr('src');
 		};
 		
 		var hideErrors = function() {
