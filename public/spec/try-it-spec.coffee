@@ -9,28 +9,40 @@ afterEach ->
 
 
 describe ".tryIt", ->
-  $specRunner=null
+  $specRunner=previousSandboxNode=loadHandler=null
   beforeEach ->
-    spyOn(window, "Sandbox").andReturn({
-      runSpecs: jasmine.createSpy('#runSpecs'),
-      kill: jasmine.createSpy('#kill')
-    })
-    $specRunner = $.jasmine.inject('<div class="spec-runner"></div>')
+    spyOn($.fn, "load").andCallFake((f) -> loadHandler = f)
+    previousSandboxNode = $.jasmine.inject('<div id="sandbox">blah</div>')[0]
+    $.jasmine.inject('<div class="template loading"><div id="someLoading"></div></div>')
+    $.jasmine.inject('<div class="template sandbox"><div id="someSandboxIframe"></div></div>')
+    $specRunner = $.jasmine.inject('<div class="spec-runner">blarg</div>')
 
     tryIt()
 
+  it "apends the iframe template to the body", ->
+    expect($('body > #someSandboxIframe')).toExist()
+
+  it "removes the old sandbox", ->
+    expect($(previousSandboxNode)).not.toBeVisible()
+
+  it "appends a loading template to the spec-runner", ->
+    expect($specRunner).toContain('#someLoading')
+
+  describe "the load handler", ->
+    beforeEach ->
+      spyOn(window, "Sandbox").andReturn({
+        runSpecs: jasmine.createSpy('#runSpecs')
+      })
+      loadHandler()
+
+    it "empties the spec results container", ->
+      expect($specRunner).toHaveHtml('');
+
+    it "runs specs", ->
+      expect(Sandbox().runSpecs).toHaveBeenCalled()
+
   afterEach ->
-    #heh, put the spec display back where it belongs.
-    $specRunner.find('.jasmine_reporter').appendTo('body')
-
-  it "runs specs", ->
-    expect(Sandbox().runSpecs).toHaveBeenCalled()
-
-  it "kills the sandbox", ->
-    expect(Sandbox().kill).toHaveBeenCalled()
-
-  it "moves the jasmine reporter to the spec runner container", ->
-    expect($specRunner).toContain('.jasmine_reporter')
+    $('#someSandboxIframe').remove()
 
 describe "Sandbox", ->
   iframe=iframeWindow=sandbox=jsmin=$specEditor=$sourceEditor=null
@@ -38,7 +50,7 @@ describe "Sandbox", ->
     iframeWindow = {
       eval: jasmine.createSpy('.eval'),
       jasmine: {
-        TrivialReporter: -> @trivialReporter='Yup!'
+        TrivialReporter: (config) -> config
         env: {
           execute: jasmine.createSpy('#execute'),
           addReporter: jasmine.createSpy('#addReporter')
@@ -61,13 +73,13 @@ describe "Sandbox", ->
 
 
   describe "#runSpecs", ->
-    $flash=$textareas=$runner=null
+    $flash=$textareas=$runner=$specRunner=null
     beforeEach ->
       spyOn(sandbox, "execute")
       $flash = $.jasmine.inject('<div class="flash">Stuff</div>')
       $textareas = $.jasmine.inject('<textarea class="error"></textarea>')
       $runner = $.jasmine.inject('<div class="runner-wrap error"></div>')
-
+      $specRunner = $.jasmine.inject('<div class="spec-runner"></div>');
 
       sandbox.runSpecs()
 
@@ -84,7 +96,11 @@ describe "Sandbox", ->
       expect($runner).not.toHaveClass('error')
 
     it "adds a trivial reporter to the jasmine environment", ->
-      expect(jsmin.getEnv().addReporter.mostRecentCall.args[0]).toEqual(new jsmin.TrivialReporter())
+
+      expect(jsmin.getEnv().addReporter.mostRecentCall.args[0]).toEqual(new jsmin.TrivialReporter({
+        location: window.document.location,
+        body: $specRunner[0]
+      }))
 
     it "executes 'specs'", ->
       expect(sandbox.execute).toHaveBeenCalledWith($specEditor)
@@ -113,11 +129,11 @@ describe "Sandbox", ->
 
 
     context "when eval as JS fails", ->
+      thrown=null
       beforeEach ->
         iframeWindow.eval.andThrow(':(')
         spyOn(CoffeeScript, "compile").andReturn('coffee!')
         spyOn($.fn, "fadeIn").andCallThrough()
-        spyOn(sandbox, "kill")
 
 
         sandbox.execute($specEditor)
@@ -145,17 +161,9 @@ describe "Sandbox", ->
         it "adds the error class to the script textarea", ->
           expect($textarea).toHaveClass('error')
 
-        it "kills the sandbox", ->
-          expect(sandbox.kill).toHaveBeenCalled()
+        it "throws the error", ->
+          expect(thrown).toBe(':(')
 
-  describe "#kill", ->
-    beforeEach ->
-      $.jasmine.inject('<div id="sandbox" src="woah"></div>')
-
-      sandbox.kill()
-
-    it "resets the src attribute on the iframeWindow", ->
-      expect(iframe.src).toBe('woah')
 
 describe "templates", ->
   $textarea=name=script=$default=$specEditor=$sourceEditor=null

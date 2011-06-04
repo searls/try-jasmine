@@ -51,7 +51,7 @@ jasmine.TrivialReporter.prototype.reportRunnerStarting = function(runner) {
           this.finishedAtSpan = this.createDom('span', { className: 'finished-at' }, ""))
       );
 
-  window.parent.document.body.appendChild(this.outerDiv);	
+  this.document.body.appendChild(this.outerDiv);
 
   var suites = runner.suites();
   for (var i = 0; i < suites.length; i++) {

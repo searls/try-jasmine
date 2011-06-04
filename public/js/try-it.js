@@ -3,10 +3,12 @@
         var sourceEditor;
 
 	window.tryIt = function() {
-		var sandbox = Sandbox();	
-		sandbox.runSpecs();
-		sandbox.kill();
-		$('.spec-runner').html($('body > .jasmine_reporter'));
+		$('.spec-runner').html($('.loading.template').html());
+		$('#sandbox').remove();
+		$($('.sandbox.template').html()).appendTo('body').load(function() {
+			$('.spec-runner').html('');
+			Sandbox().runSpecs();
+		});
 	};
 
 	//Define the little iframe sandbox
@@ -15,7 +17,10 @@
 		
 		self.runSpecs = function() {
 			hideErrors();
-			self.jasmine.getEnv().addReporter(new self.jasmine.TrivialReporter());
+	                self.jasmine.getEnv().addReporter(new self.jasmine.TrivialReporter({
+				location: window.document.location,
+				body: $('.spec-runner')[0]
+			}));
 			self.execute(specEditor);
 			self.execute(sourceEditor);
 			self.jasmine.getEnv().execute();
@@ -31,12 +36,9 @@
 					self.eval(CoffeeScript.compile(script, { bare: true }));
 				} catch(coffeeError) {
 					showError(name);
-					self.kill();	
+					throw coffeeError;
 				}
 			}
-		};
-		self.kill = function() {
-			$('#sandbox').get(0).src = $('#sandbox').attr('src');
 		};
 		
 		var hideErrors = function() {
