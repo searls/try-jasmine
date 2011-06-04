@@ -118,12 +118,13 @@ describe "Sandbox", ->
         spyOn(CoffeeScript, "compile").andReturn('coffee!')
         spyOn($.fn, "fadeIn").andCallThrough()
         spyOn(sandbox, "kill")
-        $specEditor.getSession().setValue("blah")
+
 
         sandbox.execute($specEditor)
 
         it "compiles the script to CoffeeScript", ->
-         expect(CoffeeScript.compile).toHaveBeenCalledWith("blah",{bare:on})
+         script = editor.getSession().getValue()
+         expect(CoffeeScript.compile).toHaveBeenCalledWith(script,{bare:on})
 
         it "evals the compiled CoffeeScript", ->
           expect(iframeWindow.eval).toHaveBeenCalledWith('coffee!')
@@ -157,12 +158,16 @@ describe "Sandbox", ->
       expect(iframe.src).toBe('woah')
 
 describe "templates", ->
-  $textarea=name=script=$default=null
+  $textarea=name=script=$default=$specEditor=$sourceEditor=null
   beforeEach ->
     name = 'blah'
     script = 'some script'
     $default = $.jasmine.inject("<div id='default-#{name}'> #{script} </div>")
-    $textarea = $.jasmine.inject("<input id='#{name}'/>")
+    $.jasmine.inject('<div id="spec-editor"></div>');
+    $.jasmine.inject('<div id="source-editor"></div>');
+    codeBoxes.setupCodeBoxes()
+    $specEditor = codeBoxes.getSpecEditor()
+    $sourceEditor = codeBoxes.getSourceEditor()
 
 
 
@@ -174,19 +179,19 @@ describe "templates", ->
       templates.init()
 
     it "renders specs", ->
-      expect(templates.renderDefault).toHaveBeenCalledWith('specs')
+      expect(templates.renderDefault).toHaveBeenCalledWith('specs', $specEditor)
 
     it "renders src", ->
-      expect(templates.renderDefault).toHaveBeenCalledWith('src')
+      expect(templates.renderDefault).toHaveBeenCalledWith('src', $sourceEditor)
 
   describe ".stillDefault", ->
     result=null
     beforeEach ->
-      $textarea.val(script)
+      $specEditor.getSession().setValue(script)
 
     context "when the script matches its default", ->
       beforeEach ->
-        result = templates.stillDefault(name)
+        result = templates.stillDefault(name, $specEditor)
 
       it "returns true", ->
         expect(result).toBe(true)
@@ -194,7 +199,7 @@ describe "templates", ->
     context "when the script does not match its default", ->
       beforeEach ->
         $default.html('some new script')
-        result = templates.stillDefault(name)
+        result = templates.stillDefault(name, $specEditor)
 
       it "returns false", ->
         expect(result).toBe(false)
@@ -207,20 +212,22 @@ describe "templates", ->
 
     context "no script saved in localStorage", ->
       beforeEach ->
-        templates.renderDefault(name)
+        templates.renderDefault(name, $specEditor)
 
       it "populates the textarea with the default", ->
-        expect($textarea).toHaveValue(script)
+        editorValue = $specEditor.getSession().getValue()
+        expect(editorValue).toBe(script)
 
     context "script is in localStorage", ->
-      customScript=null
+      customScript=$editorValue=null
       beforeEach ->
         localStorage[name] = customScript = 'custom script'
 
-        templates.renderDefault(name)
+        templates.renderDefault(name, $specEditor)
+        $editorValue = $specEditor.getSession().getValue()
 
-      it "populates the textarea with the saved script", ->
-        expect($textarea).toHaveValue(customScript)
+      it "populates the editor with the saved script", ->
+        expect($editorValue).toBe(customScript)
 
       it "shows the 'Clear Saved' button", ->
         expect($clearSaved).toBeVisible()
@@ -238,31 +245,32 @@ describe "templates", ->
   describe ".getDefault", ->
     $default=result=null
     beforeEach ->
-      result = templates.getDefault(name)
+      result = templates.getDefault(name, $specEditor)
 
     it "returns whatever is in #default-<name>", ->
       expect(result).toBe(script)
 
   describe ".goCoffee", ->
-    $specs=$src=null
+    $specs=$src=$editorValue=$sourceValue=null
     beforeEach ->
-      $specs = $.jasmine.inject('<input id="specs"/>')
-      $src = $.jasmine.inject('<input id="src"/>')
       spyOn(window, "confirm")
       spyOn(templates, "stillDefault")
-      spyOn(templates, "getDefault").andCallFake((name) -> name)
+      spyOn(templates, "getDefault").andCallFake((name, $specEditor) -> name)
+
 
     itOverwritesScripts = ->
       it "overwrites the specs", ->
-        expect($specs).toHaveValue('coffee-specs')
+        expect($editorValue).toBe('coffee-specs')
 
       it "overwrites the src", ->
-        expect($src).toHaveValue('coffee-src')
+        expect($sourceValue).toBe('coffee-src')
 
     context "when specs and src are still default", ->
       beforeEach ->
         templates.stillDefault.andReturn(true)
         templates.goCoffee()
+        $editorValue = $specEditor.getSession().getValue()
+        $sourceValue = $sourceEditor.getSession().getValue()
 
       it "does not display a confirm", ->
         expect(window.confirm).not.toHaveBeenCalled()
@@ -273,6 +281,8 @@ describe "templates", ->
       beforeEach ->
         templates.stillDefault.andReturn(false)
         templates.goCoffee()
+        $editorValue = $specEditor.getSession().getValue()
+        $sourceValue = $sourceEditor.getSession().getValue()
 
       it "displays a confirm", ->
         expect(window.confirm).toHaveBeenCalledWith('overwrite your code with a sampling of CoffeeScript?')
@@ -281,6 +291,8 @@ describe "templates", ->
         beforeEach ->
           window.confirm.andReturn(true)
           templates.goCoffee()
+          $editorValue = $specEditor.getSession().getValue()
+          $sourceValue = $sourceEditor.getSession().getValue()
 
         itOverwritesScripts()
 
@@ -288,12 +300,14 @@ describe "templates", ->
         beforeEach ->
           window.confirm.andReturn(false)
           templates.goCoffee()
+          $editorValue = $specEditor.getSession().getValue()
+          $sourceValue = $sourceEditor.getSession().getValue()
 
         it "leaves specs as-is", ->
-          expect($specs).toHaveValue('')
+          expect($editorValue).toBe('')
 
         it "leaves src as-is", ->
-          expect($src).toHaveValue('')
+          expect($sourceValue).toBe('')
 
 describe "~ user interface events", ->
   describe "clicking the 'try jasmine' button", ->
@@ -326,23 +340,20 @@ describe "~ user interface events", ->
         expect($.fn.insertAtCaret).not.toHaveBeenCalled()
 
   describe "hitting a snippet button", ->
-    $button=snippet=null
+    $button=snippet=$editorValue=null
     beforeEach ->
+      $.jasmine.inject('<div id="spec-editor"></div>');
+      $.jasmine.inject('<div id="source-editor"></div>');
+      codeBoxes.setupCodeBoxes()
+      $specEditor = codeBoxes.getSpecEditor()
       snippet = '1337 codez'
       $button = $("<span class='button insert' data-snippet='#{snippet}'></span>")
-      spyOn($.fn, "insertAtCaret").andCallThrough()
-      spyOn($.fn, "focus").andCallThrough()
 
       $button.trigger('click')
-
-    it "inserts into specs", ->
-      expect($.fn.insertAtCaret.mostRecentCall.object.selector).toBe('#specs')
+      $editorValue = $specEditor.getSession().getValue()
 
     it "inserts the snippet", ->
-      expect($.fn.insertAtCaret).toHaveBeenCalledWith(snippet)
-
-    it "focuses on the specs", ->
-      expect($.fn.focus.mostRecentCall.object.selector).toBe('#specs')
+      expect($editorValue).toBe(snippet)
 
   describe "clicking a clear-saved button", ->
     $button=null

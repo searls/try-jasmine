@@ -53,14 +53,14 @@
 	};
 
 	window.templates = {
-		stillDefault: function(name) {
-			return this.getDefault(name) === $('#'+name).val();
+		stillDefault: function(name, editor) {
+			return this.getDefault(name) === editor.getSession().getValue();
 		},
 		getDefault: function(name) {
 			return $.trim($('#default-'+name).text());
 		},
 		renderDefault: function(name, editor) {
-			var script = this.getDefault(name);
+			var script = this.getDefault(name, editor);
 			if((localStorage[name] && script !== localStorage[name])) {
 				$('.clear-saved').show().css('display','inline-block');
 			}
@@ -72,7 +72,7 @@
 			this.renderDefault('src', sourceEditor);
 		},
 		goCoffee: function() {
-			if((this.stillDefault('specs') && this.stillDefault('src'))
+			if((this.stillDefault('specs', specEditor) && this.stillDefault('src', sourceEditor))
 					|| confirm('overwrite your code with a sampling of CoffeeScript?')) {
                                 codeBoxes.switchToCoffeeScriptMode();
                                 specEditor.getSession().setValue(this.getDefault('coffee-specs'));
@@ -137,11 +137,11 @@
          },
          
          getSpecEditor: function(){
-           return specEditor;
+                return specEditor;
          },
 
          getSourceEditor: function(){
-           return sourceEditor;
+                return sourceEditor;
          }
                 
        }
