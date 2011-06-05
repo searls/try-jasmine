@@ -2,9 +2,9 @@
 <html>
 <head>
   <title>Try Jasmine in your browser, because downloading a zip file is too much work!</title>
-  <link rel="stylesheet" type="text/css" href="js/vendor/jasmine-1.0.2/jasmine.css" />	
-  <link rel="stylesheet" type="text/css" href="css/vendor/css3buttons/css/css3buttons.css" />	
-  <link rel="stylesheet" type="text/css" href="css/try-it.css" />	
+  <link rel="stylesheet" type="text/css" href="js/vendor/jasmine-1.0.2/jasmine.css" />
+  <link rel="stylesheet" type="text/css" href="css/vendor/css3buttons/css/css3buttons.css" />
+  <link rel="stylesheet" type="text/css" href="css/try-it.css" />
 
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>	
   <script type="text/javascript" src="js/vendor/underscore-min.js"></script>
@@ -20,119 +20,119 @@
       templates.init();
     });
   </script>
-</head>	
+</head>
 <body>
-	<div class="body-wrap">
-		<div class="head-wrap">
-			<div class="head-top-wrap">
-				<div class="header">
-					<a class="try-it big button" href="#">try jasmine!</a>
-					<br/>
-					<span>mac: &#x2318;-return, windows: ctrl-enter </span>
-				</div>
-				<div class="page-tools">
-					<a class="coffee button" href="#">see CoffeeScript</a>					
-					<a class="clear-saved hidden button negative" href="#">clear saved specs</a>
-				</div>
-			</div>
-			<div class="links-summary">
-				included scripts
-			</div>
-			<div class="links">
-				<a href="https://github.com/pivotal/jasmine/wiki">jasmine</a>				
-				&#x2601;
-				<a href="http://jquery.com">jquery</a>				
-				&#x2601;				
-				<a href="https://github.com/velesin/jasmine-jquery">jasmine-jquery</a>
-				&#x2601;
-				<a href="http://jashkenas.github.com/coffee-script/">coffee-script</a>
-				&#x2601;			
-				<a href="https://github.com/searls/jasmine-fixture">jasmine-fixture</a>
-				&#x2601;
-				<a href="https://github.com/searls/jasmine-intro">an intro</a>
-			</div>
-			<div class="flash hidden"></div>
-		</div>
-		<div class="content-wrap">
-			<div class="source-wrap">	
-				<label for="specs">specs</label>
-				<div class="macros">
-					<span>macros</span>
-					<a href="#" class="button insert" data-snippet="describe('Thing',function(){});">describe</a>
-					<a href="#" class="button insert" data-snippet="it('does something',function(){});">it</a>
-					<a href="#" class="button insert" data-snippet="expect(true).toBe(true);">expect</a>				
-					<a href="#" class="button insert" data-snippet="spyOn(object,'methodName');">spyOn</a>				
-					<a href="#" class="button insert" data-snippet="beforeEach(function(){});">beforeEach</a>
-				</div>
+  <div class="body-wrap">
+    <div class="head-wrap">
+      <div class="head-top-wrap">
+        <div class="header">
+          <a class="try-it big button" href="#">try jasmine!</a>
+          <br/>
+          <span>mac: &#x2318;-return, windows: ctrl-enter </span>
+        </div>
+        <div class="page-tools">
+          <a class="coffee button" href="#">see CoffeeScript</a>
+          <a class="clear-saved hidden button negative" href="#">clear saved specs</a>
+        </div>
+      </div>
+      <div class="links-summary">
+        included scripts
+      </div>
+      <div class="links">
+        <a href="https://github.com/pivotal/jasmine/wiki">jasmine</a>
+        &#x2601;
+        <a href="http://jquery.com">jquery</a>
+        &#x2601;
+        <a href="https://github.com/velesin/jasmine-jquery">jasmine-jquery</a>
+        &#x2601;
+        <a href="http://jashkenas.github.com/coffee-script/">coffee-script</a>
+        &#x2601;
+        <a href="https://github.com/searls/jasmine-fixture">jasmine-fixture</a>
+        &#x2601;
+        <a href="https://github.com/searls/jasmine-intro">an intro</a>
+      </div>
+      <div class="flash hidden"></div>
+      </div>
+      <div class="content-wrap">
+      <div class="source-wrap">
+        <label for="specs">specs</label>
+        <div class="macros">
+          <span>macros</span>
+          <a href="#" class="button insert" data-snippet="describe('Thing',function(){});">describe</a>
+          <a href="#" class="button insert" data-snippet="it('does something',function(){});">it</a>
+          <a href="#" class="button insert" data-snippet="expect(true).toBe(true);">expect</a>
+          <a href="#" class="button insert" data-snippet="spyOn(object,'methodName');">spyOn</a>
+          <a href="#" class="button insert" data-snippet="beforeEach(function(){});">beforeEach</a>
+        </div>
         <div id="spec-editor-wrapper" class="editor-wrapper">
                 <div id="specs" class="editor source"></div>
         </div>
-				<label for="src">source</label>
+      	<label for="src">source</label>
         <div id="source-editor-wrapper" class="editor-wrapper">
                 <div id="src" class="editor source"></div>
         </div>
-			</div>
-			<div class="runner-wrap">
-				<div class="label">results</div>
-				<div class="spec-runner">
-					<a class="hint try-it button" href="#">click "try jasmine!" in the top-left corner of the page</a>										
-				</div>
-			</div>
-		</div>
-		<div class="foot-wrap">
-			<div class="help">				
-				<ul>
-					<li>compiles and runs CoffeeScript. You can even mix-and-match (say, CoffeeScript specs for JavaScript sources)</li>
-					<li>running specs will save them in localStorage so you don't lose them (a button will appear, allowing you to clear it)</li>
-					<li>hitting tab inserts two spaces</li>
-					<li>the macro buttons will insert text wherever your cursor was last located in the "specs" field</li>					
-					<li>if you live in java-land, I wrote a <a href="http://github.com/searls/jasmine-maven-plugin">maven plugin</a> for running your Jasmine specs in continuous integration</li>
-					<li>feel free to review the <a href="spec.html">specs for try-jasmine itself</a></li>
-				</ul>			
-			</div>
-			<div class="who">brought to you by <a href="http://twitter.com/searls">@searls</a> via <a href="http://pillartechnology.com">pillar</a></div>
-		</div>
-	</div>
-	
-	<a href="http://github.com/searls/try-jasmine"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://d3nwyuy0nl342s.cloudfront.net/img/71eeaab9d563c2b3c590319b398dd35683265e85/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork me on GitHub"></a>
-	
-	<!--Templates-->
-	<pre class="template" id="default-specs">
-describe('panda',function(){
+      </div>
+      <div class="runner-wrap">
+        <div class="label">results</div>
+        <div class="spec-runner">
+          <a class="hint try-it button" href="#">click "try jasmine!" in the top-left corner of the page</a>
+        </div>
+      </div>
+      </div>
+      <div class="foot-wrap">
+      <div class="help">
+        <ul>
+          <li>compiles and runs CoffeeScript. You can even mix-and-match (say, CoffeeScript specs for JavaScript sources)</li>
+          <li>running specs will save them in localStorage so you don't lose them (a button will appear, allowing you to clear it)</li>
+          <li>thanks to <a href="http://twitter.com/carinmeier">@carinmeier</a> for investing the effort to add <a href="http://ace.ajax.org/">ace boxes</a>.</li>
+          <li>the macro buttons will insert text wherever your cursor was last located in the "specs" field</li>
+          <li>if you live in java-land, I wrote a <a href="http://github.com/searls/jasmine-maven-plugin">maven plugin</a> for running your Jasmine specs in continuous integration</li>
+          <li>feel free to review the <a href="spec.html">specs for try-jasmine itself</a></li>
+        </ul>
+      </div>
+      <div class="who">brought to you by <a href="http://twitter.com/searls">@searls</a> via <a href="http://pillartechnology.com">pillar</a></div>
+    </div>
+  </div>
+
+  <a href="http://github.com/searls/try-jasmine"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://d3nwyuy0nl342s.cloudfront.net/img/71eeaab9d563c2b3c590319b398dd35683265e85/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork me on GitHub"></a>
+
+  <!--Templates-->
+  <pre class="template" id="default-specs">
+  describe('panda',function(){
   it('is happy',function(){
     expect(panda).toBe('happy');
   });
-});
-	</pre>
-	<pre class="template" id="default-src">
-		panda = 'sad';
-	</pre>
-	<pre class="template coffee" id="default-coffee-specs">
-describe 'panda', ->
-  it 'is happy', ->
-    expect(panda).toBe('happy')
-	</pre>
-	<pre class="template coffee" id="default-coffee-src">
-panda = 'sad'
-	</pre>
-	<script type="text/html" class="template sandbox">
-		<iframe id="sandbox" src="sandbox.html"></iframe>
-	</script>
-	<script type="text/html" class="template loading">
-		<div class="load-spin"><img src="img/ajax-loader.gif"></img></div>
-	</script>
-	
-	
-	<script type="text/javascript">
-	  var _gaq = _gaq || [];
-	  _gaq.push(['_setAccount', 'UA-19328582-2']);
-	  _gaq.push(['_trackPageview']);
+  });
+  </pre>
+  <pre class="template" id="default-src">
+    panda = 'sad';
+  </pre>
+  <pre class="template coffee" id="default-coffee-specs">
+    describe 'panda', ->
+    it 'is happy', ->
+      expect(panda).toBe('happy')
+  </pre>
+  <pre class="template coffee" id="default-coffee-src">
+    panda = 'sad'
+  </pre>
+  <script type="text/html" class="template sandbox">
+    <iframe id="sandbox" src="sandbox.html"></iframe>
+  </script>
+  <script type="text/html" class="template loading">
+    <div class="load-spin"><img src="img/ajax-loader.gif"></img></div>
+  </script>
 
-	  (function() {
-	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	  })();
-	</script>
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-19328582-2']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
 </body>
 </html>
