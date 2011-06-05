@@ -114,30 +114,32 @@
   };
 
   //Eventy stuff
-  $('.try-it.button').live('click',function(e){
-    e.preventDefault();
-    tryIt();
-  });
   $('html, body').add(document.body).keydown(function(e){
     if(e.which == 13 && (e.ctrlKey || e.metaKey)) {
       e.preventDefault();
       tryIt();
     }
   });
-  $('.button.insert').live('click',function(e) {
-    e.preventDefault();
+  var clicker = function(selector,action) {
+    $(selector).live('click',function(e) {
+      e.preventDefault();
+      action.apply(this,[e])
+    });
+  };
+  clicker('.try-it.button',function() {
+    tryIt();
+  });
+  clicker('.button.insert',function() {
     editors.get('specs').insert($(this).data('snippet'));
   });
-  $('.clear-saved').live('click',function(e) {
-    e.preventDefault();
+  clicker('.clear-saved',function() {
     _(editors.names).each(function(name) {
       delete localStorage[name];
     });
     $(this).hide();
     templates.init();
   });
-  $('.coffee.button').live('click',function(e){
-    e.preventDefault();
+  clicker('.coffee.button',function() {
     templates.goCoffee();
   });
 })(jQuery);
