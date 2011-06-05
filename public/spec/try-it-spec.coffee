@@ -297,6 +297,20 @@ describe "templates", ->
           expect(sourceEditor.getSession().getValue()).toBe('')
 
 describe "~ user interface events", ->
+  describe "changing the mode selector", ->
+    fakeEditors=null
+    beforeEach ->
+      fakeEditors = fakeBothEditors()
+      $.jasmine.inject('''
+        <select id="mode-select">
+          <option value="javascript"></option>
+          <option value="coffee"></option>
+        </select>
+        ''').val('coffee').trigger('change')
+
+    it "was switched to coffee mode", ->
+      _(fakeEditors).each (e) -> expect(e.switchMode).toHaveBeenCalledWith('coffee')
+
   describe "clicking the 'try jasmine' button", ->
     beforeEach ->
       spyOn(window, "tryIt")
@@ -421,6 +435,9 @@ describe "$.fn.codeBox", ->
       editor.switchMode(NAME)
 
     behavesLikeItSwitchesModes(NAME)
+
+fakeBothEditors = ->
+  [fakeEditor('specs'), fakeEditor('src')]
 
 fakeEditor = (id) ->
   editor = fakeEditorObject(id)

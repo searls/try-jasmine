@@ -124,6 +124,13 @@
       tryIt();
     }
   });
+  $('#mode-select').live('change',function(e) {
+    e.preventDefault();
+    var $sel = $(this);
+    editors.each(function(editor) {
+      editor.switchMode($sel.val());
+    });
+  })
   var clicker = function(selector,action) {
     $(selector).live('click',function(e) {
       e.preventDefault();
