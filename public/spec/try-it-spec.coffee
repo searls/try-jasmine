@@ -138,8 +138,7 @@ describe "Sandbox", ->
         try sandbox.execute($specEditor) catch e then thrown = e
 
       it "compiles the script to CoffeeScript", ->
-       script = editor.getSession().getValue()
-       expect(CoffeeScript.compile).toHaveBeenCalledWith(script,{bare:on})
+       expect(CoffeeScript.compile).toHaveBeenCalledWith($specEditor.getSession().getValue(),{bare:on})
 
       it "evals the compiled CoffeeScript", ->
         expect(iframeWindow.eval).toHaveBeenCalledWith('coffee!')
