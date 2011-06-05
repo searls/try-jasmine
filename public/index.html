@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Try Jasmine in your browser, because downloading a zip file is too much work!</title>
-	<link rel="stylesheet" type="text/css" href="js/vendor/jasmine-1.0.2/jasmine.css" />	
-	<link rel="stylesheet" type="text/css" href="css/vendor/css3buttons/css/css3buttons.css" />	
-	<link rel="stylesheet" type="text/css" href="css/try-it.css" />	
+  <title>Try Jasmine in your browser, because downloading a zip file is too much work!</title>
+  <link rel="stylesheet" type="text/css" href="js/vendor/jasmine-1.0.2/jasmine.css" />	
+  <link rel="stylesheet" type="text/css" href="css/vendor/css3buttons/css/css3buttons.css" />	
+  <link rel="stylesheet" type="text/css" href="css/try-it.css" />	
 
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>	
-	<script type="text/javascript" src="js/vendor/coffee-script.js"></script>
-	<script type="text/javascript" src="js/try-it.js"></script>
-        <script type="text/javascript" src="js/vendor/ace/ace.js"></script>
-        <script type="text/javascript" src="js/vendor/ace/mode-coffee.js"></script>
-        <script type="text/javascript" src="js/vendor/ace/mode-javascript.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>	
+  <script type="text/javascript" src="js/vendor/coffee-script.js"></script>
+  <script type="text/javascript" src="js/try-it.js"></script>
+  <script type="text/javascript" src="js/vendor/ace/ace-uncompressed.js"></script>
+  <script type="text/javascript" src="js/vendor/ace/mode-coffee.js"></script>
+  <script type="text/javascript" src="js/vendor/ace/mode-javascript.js"></script>
 
 </head>	
 <body>
@@ -57,15 +57,13 @@
 					<a href="#" class="button insert" data-snippet="spyOn(object,'methodName');">spyOn</a>				
 					<a href="#" class="button insert" data-snippet="beforeEach(function(){});">beforeEach</a>
 				</div>
-                                <div id="spec-editor-wrapper" class="editor-wrapper">
-                                        <div id="spec-editor" class="editor"></div>
-                                </div>
-				<textarea class="source" id="specs"></textarea>
+        <div id="spec-editor-wrapper" class="editor-wrapper">
+                <div id="specs" class="editor source"></div>
+        </div>
 				<label for="src">source</label>
-                                <div id="source-editor-wrapper" class="editor-wrapper">
-                                        <div id="source-editor" class="editor"></div>
-                                </div>
-				<textarea class="source" id="src"></textarea>
+        <div id="source-editor-wrapper" class="editor-wrapper">
+                <div id="src" class="editor source"></div>
+        </div>
 			</div>
 			<div class="runner-wrap">
 				<div class="label">results</div>

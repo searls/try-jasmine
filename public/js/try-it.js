@@ -1,7 +1,4 @@
 (function($){
-  var specEditor;
-  var sourceEditor;
-
   window.tryIt = function() {
     $('.spec-runner').html($('.loading.template').html());
     $('#sandbox').remove();
@@ -21,13 +18,13 @@
         location: window.document.location,
         body: $('.spec-runner')[0]
       }));
-      self.execute(specEditor);
-      self.execute(sourceEditor);
+      self.execute($('#specs').data('editor'));
+      self.execute($('#src').data('editor'));
       self.jasmine.getEnv().execute();
     };
     self.execute = function(editor) {
       var script = editor.getSession().getValue();
-      localStorage[name] = script;
+      localStorage[editor.name] = script;
       try {
         self.eval(script);
       } catch(e) {
@@ -43,7 +40,7 @@
 
     var hideErrors = function() {
       $('.flash').html('').hide();
-      $('textarea.error, .runner-wrap').removeClass('error');
+      $('.error, .runner-wrap').removeClass('error');
     };
 
     var showError = function(name) {
@@ -55,30 +52,37 @@
   };
 
   window.templates = {
-    stillDefault: function(name, editor) {
-      return this.getDefault(name) === editor.getSession().getValue();
+    getEditor: function(name) {
+      return $('#'+name).data('editor');
+    },
+    stillDefault: function(editor) {
+      return this.getDefault(editor.name) === editor.getSession().getValue();
     },
     getDefault: function(name) {
       return $.trim($('#default-'+name).text());
     },
-    renderDefault: function(name, editor) {
-      var script = this.getDefault(name, editor);
+    renderDefault: function(name) {
+      var script = this.getDefault(name);
       if((localStorage[name] && script !== localStorage[name])) {
         $('.clear-saved').show().css('display','inline-block');
       }
-      if (!editor) {return;}
-        editor.getSession().setValue(localStorage[name] || script);
-      },
+      this.getEditor(name).getSession().setValue(localStorage[name] || script);
+    },
     init: function() {
-      this.renderDefault('specs', specEditor);
-      this.renderDefault('src', sourceEditor);
+      this.renderDefault('specs');
+      this.renderDefault('src');
     },
     goCoffee: function() {
-      if((this.stillDefault('specs', specEditor) && this.stillDefault('src', sourceEditor))
+      var specEditor = this.getEditor('specs'),
+          sourceEditor = this.getEditor('source')
+      if((this.stillDefault(specEditor) && this.stillDefault(sourceEditor))
         || confirm('overwrite your code with a sampling of CoffeeScript?')) {
-        codeBoxes.switchToCoffeeScriptMode();
-        specEditor.getSession().setValue(this.getDefault('coffee-specs'));
-        sourceEditor.getSession().setValue(this.getDefault('coffee-src'));
+        var coffeefy = function(editor) {
+          editor.switchMode('coffee');
+          editor.getSession().setValue(this.getDefault('coffee-'+editor.name));
+        };
+        coffeefy(specEditor);
+        coffeefy(sourceEditor);
       }
     }
   };
@@ -92,14 +96,6 @@
     if(e.which == 13 && (e.ctrlKey || e.metaKey)) {
       e.preventDefault();
       tryIt();
-    }
-  });
-  $('.source').live('keydown',function(e) {
-    if(e.keyCode === 9) { //TAB
-      e.preventDefault();
-      if(e.shiftKey !== true) {
-        $(this).insertAtCaret('  ');
-      }
     }
   });
   $('.button.insert').live('click',function(e) {
@@ -118,38 +114,24 @@
     templates.goCoffee();
   });
 
-  window.codeBoxes = {
-    setupCodeBoxes: function(){
-      if ($('#spec-editor').length){
-        specEditor = ace.edit("spec-editor");
-        specEditor.setTheme("ace/theme/textmate"); var
-        JavaScriptMode = require("ace/mode/javascript").Mode;
-        specEditor.getSession().setMode(new JavaScriptMode());
-        $('#specs').hide();
-      }
-      if ($('#source-editor').length){
-        sourceEditor = ace.edit("source-editor");
-        sourceEditor.setTheme("ace/theme/textmate");
-        sourceEditor.getSession().setMode(new
-        JavaScriptMode()); $('#src').hide();
-      }
-    },
-    switchToCoffeeScriptMode: function(){
-      var CoffeeScriptMode = require("ace/mode/coffee").Mode;
-      specEditor.getSession().setMode(new CoffeeScriptMode());
-      sourceEditor.getSession().setMode(new CoffeeScriptMode());
-    },
-    getSpecEditor: function(){
-      return specEditor;
-    },
-    getSourceEditor: function(){
-      return sourceEditor;
-    }
-  };
+  $.fn.codeBox = function() {
+    var $this = $(this);
+    var editor = ace.edit($this.attr('id'));
+    editor.setTheme("ace/theme/textmate");
+    editor.switchMode = function(name) {
+      var mode = require("ace/mode/"+name).Mode;
+      editor.getSession().setMode(new mode());
+    };
+    editor.name = $this.attr('id');
+    editor.switchMode('javascript');
+    $this.data('editor',editor);
+    return $this;
+  }
 
   //Dom-ready
   $(function(){
-    codeBoxes.setupCodeBoxes();
+    $('#specs').codeBox();
+    $('#src').codeBox();
     templates.init();
   });
 })(jQuery);

@@ -1,40 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>	
-	<link rel="stylesheet" type="text/css" href="js/vendor/jasmine-1.0.2/jasmine.css" />		
-	<style type="text/css">
-		.ahoy {
-			font-size: 18px;
-			margin-bottom: 10px;
-		}
-	</style>
-	
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>	
-	<script type="text/javascript" src="js/vendor/jquery-insert-at-caret.js"></script>	
-	<script type="text/javascript" src="js/vendor/jasmine-1.0.2/jasmine.js"></script>
-	<script type="text/javascript" src="js/vendor/jasmine-1.0.2/jasmine-html.js"></script>
-	<script type="text/javascript" src="js/vendor/jasmine-fixture-0.0.2.js"></script>
-	<script type="text/javascript" src="js/vendor/jasmine-jquery.js"></script>	
-	<script type="text/javascript" src="js/vendor/coffee-script.js"></script>
-	<script type="text/javascript" src="js/spec-helper.js"></script>
-        <script type="text/javascript" src="js/vendor/ace/ace.js"></script>
-        <script type="text/javascript" src="js/vendor/ace/mode-coffee.js"></script>
-        <script type="text/javascript" src="js/vendor/ace/mode-javascript.js"></script>
+  <link rel="stylesheet" type="text/css" href="js/vendor/jasmine-1.0.2/jasmine.css" />		
+  <style type="text/css">
+    .ahoy {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+  </style>
 
-	<script type="text/javascript" src="js/try-it.js"></script>
-	
-	<title>try-jasmine.heroku.com specs</title>	
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>	
+  <script type="text/javascript" src="js/vendor/jquery-insert-at-caret.js"></script>	
+  <script type="text/javascript" src="js/vendor/jasmine-1.0.2/jasmine.js"></script>
+  <script type="text/javascript" src="js/vendor/jasmine-1.0.2/jasmine-html.js"></script>
+  <script type="text/javascript" src="js/vendor/jasmine-fixture-0.0.2.js"></script>
+  <script type="text/javascript" src="js/vendor/jasmine-jquery.js"></script>	
+  <script type="text/javascript" src="js/vendor/coffee-script.js"></script>
+  <script type="text/javascript" src="js/spec-helper.js"></script>
+  <script type="text/javascript" src="js/vendor/ace/ace-uncompressed.js"></script>
+  <script type="text/javascript" src="js/vendor/ace/mode-coffee.js"></script>
+  <script type="text/javascript" src="js/vendor/ace/mode-javascript.js"></script>
+
+  <script type="text/javascript" src="js/try-it.js"></script>
+
+  <title>try-jasmine.heroku.com specs</title>	
 </head>
 <body>
-	<div class="ahoy">Ahoy! These are the specs for <a href="http://try-jasmine.heroku.com">try-jasmine.heroku.com</a>. <a href="https://github.com/searls/try-jasmine/tree/master/public/spec">Peruse them</a> on Github.</div>
-	<script type="text/javascript">
-		jQuery(function($){
-			$.get('spec/try-it-spec.coffee',function(coffee) {
-				eval(CoffeeScript.compile(coffee,{bare:true}));
-				jasmine.getEnv().addReporter(new self.jasmine.TrivialReporter());
-				jasmine.getEnv().execute();
-			});			
-		});
-	</script>	
+  <div class="ahoy">Ahoy! These are the specs for <a href="http://try-jasmine.heroku.com">try-jasmine.heroku.com</a>. <a href="https://github.com/searls/try-jasmine/tree/master/public/spec">Peruse them</a> on Github.</div>
+  <script type="text/javascript">
+    jQuery(function($){
+      $.get('spec/try-it-spec.coffee',function(coffee) {
+        eval(CoffeeScript.compile(coffee,{bare:true}));
+        jasmine.getEnv().addReporter(new self.jasmine.TrivialReporter());
+        jasmine.getEnv().execute();
+      });
+    });
+  </script>	
 </body>
 </html>
