@@ -28,13 +28,15 @@
       localStorage[editor.name] = script;
       try {
         self.eval(script);
-      } catch(e) {
+      } catch(javaScriptError) {
         //Well, maybe it's just coffeescript.
         try {
           self.eval(CoffeeScript.compile(script, { bare: true }));
         } catch(coffeeError) {
           showError(name);
-          throw coffeeError;
+          throw 'JavaScript Parse Error: '+javaScriptError+
+                '\n\n'+
+                'CoffeeScript Compile Error: '+coffeeError;
         }
       }
     };

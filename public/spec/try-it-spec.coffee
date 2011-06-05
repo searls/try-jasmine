@@ -145,7 +145,11 @@ describe "Sandbox", ->
           expect($runner).toHaveClass('error')
 
         it "throws the error", ->
-          expect(thrown).toBe(':(')
+          expect(thrown).toBe('''
+                              JavaScript Parse Error: :(
+
+                              CoffeeScript Compile Error: :(
+                              ''')
 
 
 describe "templates", ->
