@@ -77,7 +77,7 @@
       if(editors.all(function(e) { return templates.stillDefault(e); })
         || confirm('overwrite your code with a sampling of CoffeeScript?')) {
         editors.each(function(editor) {
-          editor.switchMode('coffee');
+          $('#mode-select').val('coffee').trigger('change');
           editor.getSession().setValue(templates.getDefault('coffee-'+editor.name));
         });
       }

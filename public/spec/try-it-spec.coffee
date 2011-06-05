@@ -241,13 +241,17 @@ describe "templates", ->
       expect(result).toBe(script)
 
   describe ".goCoffee", ->
-    $specs=$src=$editorValue=$sourceValue=null
+    $specs=$src=$editorValue=$sourceValue=$modeSelect=null
     beforeEach ->
+      $modeSelect = $.jasmine.inject('<input id="mode-select" value=""></input>')
       spyOn(window, "confirm")
       spyOn(templates, "stillDefault")
       spyOn(templates, "getDefault").andCallFake((name, specEditor) -> name)
 
     itOverwritesScripts = ->
+      it "sets coffee mode", ->
+        expect($modeSelect).toHaveValue('coffee')
+
       it "overwrites the specs", ->
         expect($editorValue).toBe('coffee-specs')
 
