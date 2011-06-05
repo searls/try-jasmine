@@ -118,6 +118,17 @@ describe "Sandbox", ->
       it "evals the script in the editor", ->
         expect(iframeWindow.eval).toHaveBeenCalledWith(name)
 
+    context "when eval of JS fails, but Coffee succeeds", ->
+      $select=null
+      beforeEach ->
+        $select = $.jasmine.inject('<input value="" id="mode-select"></input>')
+        iframeWindow.eval.andCallFake(-> if iframeWindow.eval.callCount == 1 then throw ':(')
+        spyOn(CoffeeScript, "compile").andReturn('coffee!')
+        sandbox.execute(specEditor)
+
+      it "sets coffee mode", ->
+        expect($select).toHaveValue('coffee')
+
 
     context "when eval as JS fails", ->
       thrown=null

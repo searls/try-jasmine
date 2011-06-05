@@ -32,6 +32,7 @@
         //Well, maybe it's just coffeescript.
         try {
           self.eval(CoffeeScript.compile(script, { bare: true }));
+          editors.setMode('coffee');
         } catch(coffeeError) {
           showError(editor.name);
           throw 'JavaScript Parse Error: '+javaScriptError+
@@ -77,7 +78,7 @@
       if(editors.all(function(e) { return templates.stillDefault(e); })
         || confirm('overwrite your code with a sampling of CoffeeScript?')) {
         editors.each(function(editor) {
-          $('#mode-select').val('coffee').trigger('change');
+          editors.setMode('coffee')  ;
           editor.getSession().setValue(templates.getDefault('coffee-'+editor.name));
         });
       }
@@ -104,6 +105,9 @@
     names: ['specs','src'],
     get: function(name) {
       return $('#'+name).data('editor');
+    },
+    setMode: function(name) {
+      $('#mode-select').val(name).trigger('change');
     },
     each: function(f) {
       return _(editors.names).each(function(name,i) {
