@@ -144,7 +144,7 @@ describe "Sandbox", ->
         it "adds the error class to the spec runner container", ->
           expect($runner).toHaveClass('error')
 
-        it "throws the error", ->
+        it "throws both errors so they hit the user's console", ->
           expect(thrown).toBe('''
                               JavaScript Parse Error: :(
 
