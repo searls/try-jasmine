@@ -88,13 +88,13 @@
     var $this = $(this);
     var editor = ace.edit($this.attr('id'));
     editor.setTheme("ace/theme/textmate");
+    editor.name = $this.attr('id');
+    $this.data('editor',editor);
     editor.switchMode = function(name) {
       var mode = require("ace/mode/"+name).Mode;
       editor.getSession().setMode(new mode());
     };
-    editor.name = $this.attr('id');
     editor.switchMode('javascript');
-    $this.data('editor',editor);
     return $this;
   };
 

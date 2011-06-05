@@ -36,7 +36,7 @@ describe ".tryIt", ->
       loadHandler()
 
     it "empties the spec results container", ->
-      expect($specRunner).toHaveHtml('');
+      expect($specRunner).toHaveHtml('')
 
     it "runs specs", ->
       expect(Sandbox().runSpecs).toHaveBeenCalled()
@@ -71,7 +71,7 @@ describe "Sandbox", ->
       spyOn(sandbox, "execute")
       $flash = $.jasmine.inject('<div class="flash">Stuff</div>')
       $runner = $.jasmine.inject('<div class="runner-wrap error"></div>')
-      $specRunner = $.jasmine.inject('<div class="spec-runner"></div>');
+      $specRunner = $.jasmine.inject('<div class="spec-runner"></div>')
 
       sandbox.runSpecs()
 
@@ -150,7 +150,6 @@ describe "Sandbox", ->
 
                               CoffeeScript Compile Error: :(
                               ''')
-
 
 describe "templates", ->
   name=script=$default=specEditor=sourceEditor=null
@@ -362,17 +361,71 @@ describe "~ user interface events", ->
       it "executes the specs", ->
         expect(tryIt).toHaveBeenCalled()
 
+describe "$.fn.codeBox", ->
+  $div=result=editor=null
+  ID="woah"
+  beforeEach ->
+    editor = fakeEditorObject(ID)
+    editor.name = undefined
+    spyOn(ace, "edit").andReturn(editor)
+    $div = $("<div id=#{ID}></div>")
+    spyOn(window, "require").andReturn({
+      Mode: -> @panda = true
+    })
+
+    result = $div.codeBox()
+
+  it "returns the result object to support chaining", ->
+    expect(result).toEqual($div)
+
+  it "creates an ace box for the id of the div", ->
+    expect(ace.edit).toHaveBeenCalledWith(ID)
+
+  it "sets the theme to textmate", ->
+    expect(editor.setTheme).toHaveBeenCalledWith("ace/theme/textmate")
+
+  it "sets the name to that of the id", ->
+    expect(editor.name).toBe(ID)
+
+  it "persists the editor in a data key 'editor'", ->
+    expect($div.data('editor')).toBe(editor)
+
+  behavesLikeItSwitchesModes = (name) ->
+    it "requires the #{name} mode", ->
+      expect(require.callCount).toBe(1)
+      expect(require).toHaveBeenCalledWith("ace/mode/#{name}")
+
+    it "sets the mode on the editor", ->
+      expect(editor.getSession().setMode).toHaveBeenCalled()
+      expect(editor.getSession().setMode.mostRecentCall.args[0].panda).toBe(true)
+
+  behavesLikeItSwitchesModes('javascript')
+
+  describe "#switchMode", ->
+    NAME='PANDA'
+    beforeEach ->
+      require.reset()
+      editor.getSession().setMode.reset()
+      editor.switchMode(NAME)
+
+    behavesLikeItSwitchesModes(NAME)
+
 fakeEditor = (id) ->
+  editor = fakeEditorObject(id)
+  $.jasmine.inject("<div id=\"#{id}\"></div>").data('editor',editor)
+  editor
+
+fakeEditorObject = (id) ->
+  setMode = jasmine.createSpy('#getSession #setMode')
   editor = {
     value: '',
     name: id,
+    setTheme: jasmine.createSpy('#setTheme'),
     switchMode: jasmine.createSpy('#switchMode'),
     insert: jasmine.createSpy('#insert'),
     getSession: -> {
       getValue: -> editor.value,
       setValue: (val) -> editor.value = val,
-      setMode: jasmine.createSpy('#getSession#setMode')
+      setMode: setMode
     }
   }
-  $.jasmine.inject("<div id=\"#{id}\"></div>").data('editor',editor)
-  editor
