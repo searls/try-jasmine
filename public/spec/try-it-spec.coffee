@@ -85,7 +85,6 @@ describe "Sandbox", ->
       expect($runner).not.toHaveClass('error')
 
     it "adds a trivial reporter to the jasmine environment", ->
-
       expect(jsmin.getEnv().addReporter.mostRecentCall.args[0]).toEqual(new jsmin.TrivialReporter({
         location: window.document.location,
         body: $specRunner[0]
@@ -94,7 +93,7 @@ describe "Sandbox", ->
     it "executes 'specs'", ->
       expect(sandbox.execute).toHaveBeenCalledWith(specEditor)
 
-    it "executes 'src", ->
+    it "executes 'src'", ->
       expect(sandbox.execute).toHaveBeenCalledWith(sourceEditor)
 
     it "executes jasmine", ->

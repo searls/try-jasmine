@@ -18,8 +18,9 @@
         location: window.document.location,
         body: $('.spec-runner')[0]
       }));
-      self.execute($('#specs').data('editor'));
-      self.execute($('#src').data('editor'));
+      editors.each(function(editor) {
+        self.execute(editor);
+      });
       self.jasmine.getEnv().execute();
     };
     self.execute = function(editor) {
@@ -63,15 +64,15 @@
       if((localStorage[name] && script !== localStorage[name])) {
         $('.clear-saved').show().css('display','inline-block');
       }
-      getEditor(name).getSession().setValue(localStorage[name] || script);
+      editors.get(name).getSession().setValue(localStorage[name] || script);
     },
     init: function() {
       this.renderDefault('specs');
       this.renderDefault('src');
     },
     goCoffee: function() {
-      var specEditor = getEditor('specs'),
-          sourceEditor = getEditor('src');
+      var specEditor = editors.get('specs'),
+          sourceEditor = editors.get('src');
       if((this.stillDefault(specEditor) && this.stillDefault(sourceEditor))
         || confirm('overwrite your code with a sampling of CoffeeScript?')) {
         var coffeefy = function(editor) {
@@ -97,8 +98,17 @@
     $this.data('editor',editor);
     return $this;
   };
-  var getEditor = function(name) {
-    return $('#'+name).data('editor');
+
+  var editors = {
+    names: ['specs','src'],
+    get: function(name) {
+      return $('#'+name).data('editor');
+    },
+    each: function(f) {
+      return _(editors.names).each(function(name,i) {
+        f(editors.get(name),i);
+      });
+    }
   };
 
   //Eventy stuff
@@ -114,12 +124,13 @@
   });
   $('.button.insert').live('click',function(e) {
     e.preventDefault();
-    getEditor('specs').insert($(this).data('snippet'));
+    editors.get('specs').insert($(this).data('snippet'));
   });
   $('.clear-saved').live('click',function(e) {
     e.preventDefault();
-    delete localStorage['specs'];
-    delete localStorage['src'];
+    _(editors.names).each(function(name) {
+      delete localStorage[name];
+    });
     $(this).hide();
     templates.init();
   });
