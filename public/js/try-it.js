@@ -87,14 +87,16 @@
   $.fn.codeBox = function() {
     var $this = $(this);
     var editor = ace.edit($this.attr('id'));
-    editor.setTheme("ace/theme/textmate");
     editor.name = $this.attr('id');
-    $this.data('editor',editor);
+    editor.setTheme("ace/theme/textmate");
+    editor.getSession().setTabSize(2)
+    editor.getSession().setUseSoftTabs(true);
     editor.switchMode = function(name) {
       var mode = require("ace/mode/"+name).Mode;
       editor.getSession().setMode(new mode());
     };
     editor.switchMode('javascript');
+    $this.data('editor',editor);
     return $this;
   };
 

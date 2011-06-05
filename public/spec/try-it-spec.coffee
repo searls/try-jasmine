@@ -390,6 +390,12 @@ describe "$.fn.codeBox", ->
   it "persists the editor in a data key 'editor'", ->
     expect($div.data('editor')).toBe(editor)
 
+  it "sets tab size of 2", ->
+    expect(editor.getSession().setTabSize).toHaveBeenCalledWith(2)
+
+  it "enables soft tabs (spaces instead of tabulators)", ->
+    expect(editor.getSession().setUseSoftTabs).toHaveBeenCalledWith(true)
+
   behavesLikeItSwitchesModes = (name) ->
     it "requires the #{name} mode", ->
       expect(require.callCount).toBe(1)
@@ -416,16 +422,18 @@ fakeEditor = (id) ->
   editor
 
 fakeEditorObject = (id) ->
-  setMode = jasmine.createSpy('#getSession #setMode')
+  session = {
+    getValue: -> editor.value,
+    setValue: (val) -> editor.value = val,
+    setMode: jasmine.createSpy('#getSession #setMode'),
+    setTabSize: jasmine.createSpy('#getSession #setTabSize')
+    setUseSoftTabs: jasmine.createSpy('#getSession #setUseSoftTabs')
+  }
   editor = {
     value: '',
     name: id,
     setTheme: jasmine.createSpy('#setTheme'),
     switchMode: jasmine.createSpy('#switchMode'),
     insert: jasmine.createSpy('#insert'),
-    getSession: -> {
-      getValue: -> editor.value,
-      setValue: (val) -> editor.value = val,
-      setMode: setMode
-    }
+    getSession: -> session
   }
