@@ -67,20 +67,17 @@
       editors.get(name).getSession().setValue(localStorage[name] || script);
     },
     init: function() {
-      this.renderDefault('specs');
-      this.renderDefault('src');
+      _(editors.names).each(function(name) {
+        templates.renderDefault(name);
+      });
     },
     goCoffee: function() {
-      var specEditor = editors.get('specs'),
-          sourceEditor = editors.get('src');
-      if((this.stillDefault(specEditor) && this.stillDefault(sourceEditor))
+      if(editors.all(function(e) { return templates.stillDefault(e); })
         || confirm('overwrite your code with a sampling of CoffeeScript?')) {
-        var coffeefy = function(editor) {
+        editors.each(function(editor) {
           editor.switchMode('coffee');
           editor.getSession().setValue(templates.getDefault('coffee-'+editor.name));
-        };
-        coffeefy(specEditor);
-        coffeefy(sourceEditor);
+        });
       }
     }
   };
@@ -107,6 +104,11 @@
     each: function(f) {
       return _(editors.names).each(function(name,i) {
         f(editors.get(name),i);
+      });
+    },
+    all: function(f) {
+      return _(editors.names).all(function(name,i) {
+        return f(editors.get(name),i);
       });
     }
   };
