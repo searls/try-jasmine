@@ -2,6 +2,7 @@
 <title>Justin Searls's Git Achievements</title>
 <description></description>
 <link></link>
+<item><title>Apprentice Socialite (Level 1)</title><description>pushed a branch to a remote repository using git push</description></item>
 <item><title>Apprentice Banker (Level 1)</title><description>Join two or more development histories together with git merge.</description></item>
 <item><title>Apprentice Blacksmith (Level 1)</title><description>Created a branch using git checkout -b.</description></item>
 <item><title>Student</title><description>Accessed the documentation for a command with git [command] --help</description></item>
