@@ -1,4 +1,7 @@
 (function($){
+        var specEditor;
+        var sourceEditor;
+
 	window.tryIt = function() {
 		$('.spec-runner').html($('.loading.template').html());
 		$('#sandbox').remove();
@@ -14,16 +17,16 @@
 		
 		self.runSpecs = function() {
 			hideErrors();
-			self.jasmine.getEnv().addReporter(new self.jasmine.TrivialReporter({
+	                self.jasmine.getEnv().addReporter(new self.jasmine.TrivialReporter({
 				location: window.document.location,
 				body: $('.spec-runner')[0]
 			}));
-			self.execute('specs');
-			self.execute('src');
+			self.execute(specEditor);
+			self.execute(sourceEditor);
 			self.jasmine.getEnv().execute();
 		};
-		self.execute = function(name) {
-			var script = $('#'+name).val();
+		self.execute = function(editor) {
+                        var script = editor.getSession().getValue();
 			localStorage[name] = script;
 			try {
 				self.eval(script);
@@ -52,28 +55,30 @@
 	};
 
 	window.templates = {
-		stillDefault: function(name) {
-			return this.getDefault(name) === $('#'+name).val();
+		stillDefault: function(name, editor) {
+			return this.getDefault(name) === editor.getSession().getValue();
 		},
 		getDefault: function(name) {
 			return $.trim($('#default-'+name).text());
 		},
-		renderDefault: function(name) {
-			var script = this.getDefault(name);
+		renderDefault: function(name, editor) {
+			var script = this.getDefault(name, editor);
 			if((localStorage[name] && script !== localStorage[name])) {
 				$('.clear-saved').show().css('display','inline-block');
 			}
-			$('#'+name).val(localStorage[name] || script);		
+                        if (!editor) {return;}
+                        editor.getSession().setValue(localStorage[name] || script);	
 		},
 		init: function() {
-			this.renderDefault('specs');
-			this.renderDefault('src');
+			this.renderDefault('specs', specEditor);
+			this.renderDefault('src', sourceEditor);
 		},
 		goCoffee: function() {
-			if((this.stillDefault('specs') && this.stillDefault('src'))
+			if((this.stillDefault('specs', specEditor) && this.stillDefault('src', sourceEditor))
 					|| confirm('overwrite your code with a sampling of CoffeeScript?')) {
-				$('#specs').val(this.getDefault('coffee-specs'));
-				$('#src').val(this.getDefault('coffee-src'));
+                                codeBoxes.switchToCoffeeScriptMode();
+                                specEditor.getSession().setValue(this.getDefault('coffee-specs'));
+                                sourceEditor.getSession().setValue(this.getDefault('coffee-src'));  
 			}
 		}		
 	};
@@ -99,7 +104,7 @@
 	});
 	$('.button.insert').live('click',function(e) {
 		e.preventDefault();
-		$('#specs').insertAtCaret($(this).data('snippet')).focus();		
+                specEditor.insert($(this).data('snippet'));		
 	});
 	$('.clear-saved').live('click',function(e) {
 		e.preventDefault();
@@ -112,8 +117,41 @@
 		e.preventDefault();
 		templates.goCoffee();
 	});
+       window.codeBoxes = {
+         setupCodeBoxes: function(){ if ($('#spec-editor').length){
+                specEditor = ace.edit("spec-editor");
+                specEditor.setTheme("ace/theme/textmate"); var
+                JavaScriptMode = require("ace/mode/javascript").Mode;
+                specEditor.getSession().setMode(new JavaScriptMode());
+                $('#specs').hide(); }
+               
+                if ($('#source-editor').length){
+                        sourceEditor = ace.edit("source-editor");
+                        sourceEditor.setTheme("ace/theme/textmate");
+                        sourceEditor.getSession().setMode(new
+                        JavaScriptMode()); $('#src').hide();
+                } 
+          },
+         switchToCoffeeScriptMode: function(){
+         var CoffeeScriptMode = require("ace/mode/coffee").Mode;
+                specEditor.getSession().setMode(new CoffeeScriptMode());
+                sourceEditor.getSession().setMode(new CoffeeScriptMode());
+         },
+         
+         getSpecEditor: function(){
+                return specEditor;
+         },
+
+         getSourceEditor: function(){
+                return sourceEditor;
+         }
+                
+       }
+
+
 	//Dom-ready
 	$(function(){
+                codeBoxes.setupCodeBoxes();
 		templates.init();
 	});
 	
