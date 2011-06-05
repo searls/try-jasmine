@@ -61,8 +61,8 @@ describe "Sandbox", ->
     iframe = { contentWindow: iframeWindow}
     spyOn($.fn, "get").andReturn(iframe)
     jsmin = iframeWindow.jasmine
-    specEditor = makeEditor('specs')
-    sourceEditor = makeEditor('src')
+    specEditor = fakeEditor('specs')
+    sourceEditor = fakeEditor('src')
     sandbox = Sandbox()
 
   describe "#runSpecs", ->
@@ -155,8 +155,8 @@ describe "templates", ->
     name = 'specs'
     script = 'some script'
     $default = $.jasmine.inject("<div id='default-#{name}'> #{script} </div>")
-    specEditor = makeEditor('specs')
-    sourceEditor = makeEditor('src')
+    specEditor = fakeEditor('specs')
+    sourceEditor = fakeEditor('src')
 
   describe ".init", ->
     beforeEach ->
@@ -298,38 +298,16 @@ describe "~ user interface events", ->
     it "invokes tryIt", ->
       expect(tryIt).toHaveBeenCalled()
 
-  xdescribe "hitting tab", ->
-    $field=null
-    beforeEach ->
-      spyOn($.fn, "insertAtCaret")
-      $field = $.jasmine.inject('<span class="source"></span>')
-
-    context "just tab", ->
-      beforeEach -> $field.trigger({ type: 'keydown', keyCode: 9 })
-      it "inserts two spaces", ->
-        expect($.fn.insertAtCaret).toHaveBeenCalledWith('  ')
-
-      it "inserts them on the source", ->
-        expect($.fn.insertAtCaret.mostRecentCall.object[0]).toBe($field[0])
-
-    context "holding shift", ->
-      beforeEach -> $field.trigger({ type: 'keydown', keyCode: 9, shiftKey: true })
-
-      it "does nothing", ->
-        expect($.fn.insertAtCaret).not.toHaveBeenCalled()
-
   describe "hitting a snippet button", ->
-    snippet=result=null
+    snippet=specEditor=result=null
     beforeEach ->
-      specEditor = makeEditor('specs')
+      specEditor = fakeEditor('specs')
       snippet = '1337 codez'
-      $button = $("<span class='button insert' data-snippet='#{snippet}'></span>")
-
-      $button.trigger('click')
+      $("<span class='button insert' data-snippet='#{snippet}'></span>").trigger('click')
       result = specEditor.getSession().getValue()
 
     it "inserts the snippet", ->
-      expect(result).toBe(snippet)
+      expect(specEditor.insert).toHaveBeenCalledWith(snippet)
 
   describe "clicking a clear-saved button", ->
     $button=null
@@ -381,4 +359,17 @@ describe "~ user interface events", ->
       it "executes the specs", ->
         expect(tryIt).toHaveBeenCalled()
 
-makeEditor = (id) -> $.jasmine.inject("<div id=\"#{id}\"></div>").codeBox().data('editor')
+fakeEditor = (id) ->
+  editor = {
+    value: '',
+    name: id,
+    switchMode: jasmine.createSpy('#switchMode'),
+    insert: jasmine.createSpy('#insert'),
+    getSession: -> {
+      getValue: -> editor.value,
+      setValue: (val) -> editor.value = val,
+      setMode: jasmine.createSpy('#getSession#setMode')
+    }
+  }
+  $.jasmine.inject("<div id=\"#{id}\"></div>").data('editor',editor)
+  editor
