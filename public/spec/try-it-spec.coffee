@@ -72,7 +72,7 @@ describe "Sandbox", ->
       $flash = $.jasmine.inject('<div class="flash">Stuff</div>')
       $runner = $.jasmine.inject('<div class="runner-wrap error"></div>')
       $specRunner = $.jasmine.inject('<div class="spec-runner"></div>')
-
+      $('#specs').addClass('error')
       sandbox.runSpecs()
 
     it "empties the error message box", ->
@@ -83,6 +83,9 @@ describe "Sandbox", ->
 
     it "removes the error class from the spec runner container", ->
       expect($runner).not.toHaveClass('error')
+
+    it "removes the error class to the editor", ->
+      expect($('#specs')).not.toHaveClass('error')
 
     it "adds a trivial reporter to the jasmine environment", ->
       expect(jsmin.getEnv().addReporter.mostRecentCall.args[0]).toEqual(new jsmin.TrivialReporter({
@@ -143,6 +146,9 @@ describe "Sandbox", ->
 
         it "adds the error class to the spec runner container", ->
           expect($runner).toHaveClass('error')
+
+        it "adds the error class to the editor", ->
+          expect($('#specs')).toHaveClass('error')
 
         it "throws both errors so they hit the user's console", ->
           expect(thrown).toBe('''

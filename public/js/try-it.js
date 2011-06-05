@@ -33,7 +33,7 @@
         try {
           self.eval(CoffeeScript.compile(script, { bare: true }));
         } catch(coffeeError) {
-          showError(name);
+          showError(editor.name);
           throw 'JavaScript Parse Error: '+javaScriptError+
                 '\n\n'+
                 'CoffeeScript Compile Error: '+coffeeError;
@@ -48,7 +48,7 @@
 
     var showError = function(name) {
       $('.flash').fadeIn().append("<li>Uh oh, it looks like your JavaScript "+(name === 'specs' ? 'specs have' : 'source has')+" a parse error!</li>");
-      $('.runner-wrap').addClass('error');
+      $('.runner-wrap, #'+name).addClass('error');
     };
 
     return self;
