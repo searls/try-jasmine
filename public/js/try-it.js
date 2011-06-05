@@ -48,7 +48,7 @@
 
     var showError = function(name) {
       $('.flash').fadeIn().append("<li>Uh oh, it looks like your JavaScript "+(name === 'specs' ? 'specs have' : 'source has')+" a parse error!</li>");
-      $('.runner-wrap, #'+name).addClass('error');
+      $('.runner-wrap').addClass('error');
     };
 
     return self;

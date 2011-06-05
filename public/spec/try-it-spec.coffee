@@ -135,15 +135,14 @@ describe "Sandbox", ->
         spyOn(CoffeeScript, "compile").andReturn('coffee!')
         spyOn($.fn, "fadeIn").andCallThrough()
 
+        try sandbox.execute($specEditor) catch e then thrown = e
 
-        sandbox.execute($specEditor)
+      it "compiles the script to CoffeeScript", ->
+       script = editor.getSession().getValue()
+       expect(CoffeeScript.compile).toHaveBeenCalledWith(script,{bare:on})
 
-        it "compiles the script to CoffeeScript", ->
-         script = editor.getSession().getValue()
-         expect(CoffeeScript.compile).toHaveBeenCalledWith(script,{bare:on})
-
-        it "evals the compiled CoffeeScript", ->
-          expect(iframeWindow.eval).toHaveBeenCalledWith('coffee!')
+      it "evals the compiled CoffeeScript", ->
+        expect(iframeWindow.eval).toHaveBeenCalledWith('coffee!')
 
       context "when eval as JS & CoffeeScript both fail", ->
         it "shows the error message box", ->
