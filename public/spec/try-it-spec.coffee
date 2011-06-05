@@ -164,10 +164,10 @@ describe "templates", ->
       templates.init()
 
     it "renders specs", ->
-      expect(templates.renderDefault).toHaveBeenCalledWith('specs', specEditor)
+      expect(templates.renderDefault).toHaveBeenCalledWith('specs')
 
     it "renders src", ->
-      expect(templates.renderDefault).toHaveBeenCalledWith('src', sourceEditor)
+      expect(templates.renderDefault).toHaveBeenCalledWith('src')
 
   describe ".stillDefault", ->
     result=null
@@ -176,7 +176,7 @@ describe "templates", ->
 
     context "when the script matches its default", ->
       beforeEach ->
-        result = templates.stillDefault(name, specEditor)
+        result = templates.stillDefault(specEditor)
 
       it "returns true", ->
         expect(result).toBe(true)
@@ -184,7 +184,7 @@ describe "templates", ->
     context "when the script does not match its default", ->
       beforeEach ->
         $default.html('some new script')
-        result = templates.stillDefault(name, specEditor)
+        result = templates.stillDefault(specEditor)
 
       it "returns false", ->
         expect(result).toBe(false)
