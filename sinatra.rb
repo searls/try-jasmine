@@ -3,6 +3,6 @@ require 'bundler/setup'
 require 'sinatra'
 
 get '/' do
-  redirect '/index.html'
+	File.read(File.join('public', 'index.html'))
 end
 
