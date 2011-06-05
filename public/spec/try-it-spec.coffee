@@ -66,11 +66,10 @@ describe "Sandbox", ->
     sandbox = Sandbox()
 
   describe "#runSpecs", ->
-    $flash=$textareas=$runner=$specRunner=null
+    $flash=$runner=$specRunner=null
     beforeEach ->
       spyOn(sandbox, "execute")
       $flash = $.jasmine.inject('<div class="flash">Stuff</div>')
-      $textareas = $.jasmine.inject('<textarea class="error"></textarea>')
       $runner = $.jasmine.inject('<div class="runner-wrap error"></div>')
       $specRunner = $.jasmine.inject('<div class="spec-runner"></div>');
 
@@ -81,9 +80,6 @@ describe "Sandbox", ->
 
     it "hides the error message box", ->
       expect($flash).not.toBeVisible()
-
-    it "removes the error class from textareas", ->
-      expect($textareas).not.toHaveClass('error')
 
     it "removes the error class from the spec runner container", ->
       expect($runner).not.toHaveClass('error')
@@ -105,7 +101,7 @@ describe "Sandbox", ->
       expect(jsmin.getEnv().execute).toHaveBeenCalled()
 
   describe "#execute", ->
-    $flash=$textarea=$runner=name=null
+    $flash=$runner=name=null
     beforeEach ->
       name = 'some-script'
       specEditor.getSession().setValue(name)
@@ -117,7 +113,7 @@ describe "Sandbox", ->
       beforeEach ->
         sandbox.execute(specEditor)
 
-      it "evals the script in the textarea", ->
+      it "evals the script in the editor", ->
         expect(iframeWindow.eval).toHaveBeenCalledWith(name)
 
 
@@ -149,17 +145,14 @@ describe "Sandbox", ->
         it "adds the error class to the spec runner container", ->
           expect($runner).toHaveClass('error')
 
-        it "adds the error class to the script textarea", ->
-          expect($textarea).toHaveClass('error')
-
         it "throws the error", ->
           expect(thrown).toBe(':(')
 
 
 describe "templates", ->
-  $textarea=name=script=$default=specEditor=sourceEditor=null
+  name=script=$default=specEditor=sourceEditor=null
   beforeEach ->
-    name = 'blah'
+    name = 'specs'
     script = 'some script'
     $default = $.jasmine.inject("<div id='default-#{name}'> #{script} </div>")
     specEditor = makeEditor('specs')
@@ -197,29 +190,25 @@ describe "templates", ->
         expect(result).toBe(false)
 
   describe ".renderDefault", ->
-    $clearSaved=null
+    $clearSaved=customScript=null
     beforeEach ->
       delete localStorage[name]
       $clearSaved = $.jasmine.inject('<div class="clear-saved">Blah</div>').hide()
 
     context "no script saved in localStorage", ->
       beforeEach ->
-        templates.renderDefault(name, specEditor)
+        templates.renderDefault(name)
 
       it "populates the textarea with the default", ->
-        editorValue = specEditor.getSession().getValue()
-        expect(editorValue).toBe(script)
+        expect(specEditor.getSession().getValue()).toBe(script)
 
     context "script is in localStorage", ->
-      customScript=$editorValue=null
       beforeEach ->
         localStorage[name] = customScript = 'custom script'
-
-        templates.renderDefault(name, specEditor)
-        $editorValue = specEditor.getSession().getValue()
+        templates.renderDefault(name)
 
       it "populates the editor with the saved script", ->
-        expect($editorValue).toBe(customScript)
+        expect(specEditor.getSession().getValue()).toBe(customScript)
 
       it "shows the 'Clear Saved' button", ->
         expect($clearSaved).toBeVisible()
@@ -230,6 +219,7 @@ describe "templates", ->
     context "default script is the same as saved in local storage", ->
       beforeEach ->
         localStorage[name] = script
+        templates.renderDefault(name)
 
       it "keeps the 'Clear Saved' button hidden", ->
         expect($clearSaved).not.toBeVisible()
@@ -248,7 +238,6 @@ describe "templates", ->
       spyOn(window, "confirm")
       spyOn(templates, "stillDefault")
       spyOn(templates, "getDefault").andCallFake((name, specEditor) -> name)
-
 
     itOverwritesScripts = ->
       it "overwrites the specs", ->
@@ -343,6 +332,7 @@ describe "~ user interface events", ->
       expect(result).toBe(snippet)
 
   describe "clicking a clear-saved button", ->
+    $button=null
     beforeEach ->
       localStorage['specs'] = localStorage['src'] = 'a'
       $button = $.jasmine.inject('<span class="clear-saved">b</span>')

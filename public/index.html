@@ -12,7 +12,13 @@
   <script type="text/javascript" src="js/vendor/ace/ace-uncompressed.js"></script>
   <script type="text/javascript" src="js/vendor/ace/mode-coffee.js"></script>
   <script type="text/javascript" src="js/vendor/ace/mode-javascript.js"></script>
-
+  <script type="text/javascript">
+    jQuery(function($){
+      $('#specs').codeBox();
+      $('#src').codeBox();
+      templates.init();
+    });
+  </script>
 </head>	
 <body>
 	<div class="body-wrap">
