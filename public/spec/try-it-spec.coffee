@@ -355,10 +355,10 @@ describe "~ user interface events", ->
       $button.trigger('click')
 
     it "clears stored specs", ->
-      expect(localStorage['specs']).not.toBeDefined()
+      expect(localStorage['specs']).toBeFalsy()
 
     it "clears stored src", ->
-      expect(localStorage['src']).not.toBeDefined()
+      expect(localStorage['src']).toBeFalsy()
 
     it "hides the button", ->
       expect($button).not.toBeVisible()
