@@ -157,4 +157,23 @@
   clicker('.coffee.button',function() {
     templates.goCoffee();
   });
+
+  var loadGists = (function() {
+    var idMatches = window.location.search.match(/gist=(\d*)/);
+    if(idMatches) {
+      $.getJSON('/gists/'+idMatches[1],function(json) {
+        var specs = '',
+            src = '';
+        _(json.files).each(function(file,name) {
+          if(name.match(/spec\.(js|coffee)/)) {
+            specs += file.content + '\n';
+          } else {
+            src += file.content + '\n';
+          }
+        });
+        editors.get("specs").getSession().setValue(specs);
+        editors.get("src").getSession().setValue(src);
+      })
+    }
+  })();
 })(jQuery);
