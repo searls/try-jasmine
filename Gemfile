@@ -1,10 +1,11 @@
 source 'http://rubygems.org'
 
 gem 'sinatra'
-gem 'heroku'
+gem 'httparty', '~>0.8.1'
 
 group :development do
   gem 'shotgun'
+  gem 'heroku'
 
   gem 'jasmine-headless-webkit'
   gem 'guard-jasmine-headless-webkit'
