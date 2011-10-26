@@ -1,0 +1,17 @@
+src_files:
+  - "public/spec/vendor/**/*.{js,coffee}"
+  - "public/js/vendor/ace/**/*.{js,coffee}"
+  - "public/js/vendor/*.{js,coffee}"
+  - "public/js/*.{js,coffee}"
+
+stylesheets:
+
+helpers:
+  - "helpers/**/*.{js,coffee}"
+
+spec_files:
+  - "**/*[Ss]pec.{js,coffee}"
+
+src_dir:
+
+spec_dir: public/spec

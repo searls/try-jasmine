@@ -1,2 +1,4 @@
 .DS_Store
 .bundle
+.jhw-cache
+jhw*

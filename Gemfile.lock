@@ -1,28 +1,62 @@
 GEM
   remote: http://rubygems.org/
   specs:
+    coffee-script (2.2.0)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.1.2)
     configuration (1.2.0)
+    execjs (1.2.9)
+      multi_json (~> 1.0)
+    growl_notify (0.0.1)
+      rb-appscript
+    guard (0.8.8)
+      thor (~> 0.14.6)
+    guard-jasmine-headless-webkit (0.3.0)
+      guard (>= 0.4.0)
+      jasmine-headless-webkit (>= 0.7.0)
     heroku (2.1.4)
       launchy (>= 0.3.2)
       rest-client (~> 1.6.1)
       term-ansicolor (~> 1.0.5)
+    jasmine-core (1.2.0.rc1)
+    jasmine-headless-webkit (0.7.2)
+      coffee-script (>= 2.2)
+      jasmine-core (~> 1.1.beta)
+      multi_json
+      rainbow
     launchy (0.4.0)
       configuration (>= 0.0.5)
       rake (>= 0.8.1)
     mime-types (1.16)
-    rack (1.2.2)
+    multi_json (1.0.3)
+    rack (1.3.5)
+    rack-protection (1.1.4)
+      rack
+    rainbow (1.1.1)
     rake (0.9.0)
+    rb-appscript (0.6.1)
+    rb-fsevent (0.4.3.1)
     rest-client (1.6.1)
       mime-types (>= 1.16)
-    sinatra (1.2.6)
-      rack (~> 1.1)
-      tilt (>= 1.2.2, < 2.0)
+    shotgun (0.9)
+      rack (>= 1.0)
+    sinatra (1.3.1)
+      rack (>= 1.3.4, ~> 1.3)
+      rack-protection (>= 1.1.2, ~> 1.1)
+      tilt (>= 1.3.3, ~> 1.3)
     term-ansicolor (1.0.5)
-    tilt (1.3.1)
+    thor (0.14.6)
+    tilt (1.3.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  growl_notify
+  guard-jasmine-headless-webkit
   heroku
+  jasmine-headless-webkit
+  rb-fsevent
+  shotgun
   sinatra
