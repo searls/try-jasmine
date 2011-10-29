@@ -165,6 +165,10 @@
         var specs = '',
             src = '';
         _(json.files).each(function(file,name) {
+          if(name.indexOf('.coffee') !== -1) {
+            editors.setMode('coffee');
+          }
+
           if(name.match(/spec\.(js|coffee)/)) {
             specs += file.content + '\n';
           } else {
