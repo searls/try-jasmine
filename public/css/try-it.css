@@ -50,9 +50,11 @@ label,.label {
 }
 
 a.try-it.hint {
-  font-size: 14px;
-  margin-top: 20px;
-  margin-left: 40px;
+  font-size: 18px;
+}
+
+.hint {
+  text-align: center;
 }
 
 .head-wrap .links-summary {
@@ -88,17 +90,15 @@ a.try-it.hint {
   float:right;
 }
 
-.source-wrap {
-  clear: left;
-  float: left;
-  width: 475px;
-  display: inline;
+.editor-mode {
+  margin-left: 20px;
+  font-size: 0.9em;
+  color: #888;
+  float:right;
 }
 
 .runner-wrap {
-  float: right;
-  width: 475px;
-  display: inline;
+  margin: 5px 0px 5px 0px;
 }
 
 .spec-runner {
@@ -149,8 +149,7 @@ iframe {
 
 .editor {
   margin: 0px;
-  float: left;
-  width: 475px;
+  width: 940px;
   height: 300px;
   overflow: hidden;
 }
