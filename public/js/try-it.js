@@ -102,6 +102,7 @@
     editor.setTheme("ace/theme/textmate");
     editor.getSession().setTabSize(2)
     editor.getSession().setUseSoftTabs(true);
+    editor.renderer.setShowPrintMargin(false);
     editor.switchMode = function(name) {
       localStorage['editorMode'] = name;
       $('#mode-select').val(name);
