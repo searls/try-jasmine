@@ -182,4 +182,20 @@
       })
     }
   })();
+
+  var hackAceKeyboardShortcuts = (function() {
+    var canon = require('pilot/canon')
+    canon.removeCommand("gotoline");
+    canon.addCommand({
+        name: "donothingsave",
+        bindKey: {
+          win: 'Ctrl-S',
+          mac: 'Command-S',
+          sender: 'editor'
+        },
+        exec: function(env, args, request) {
+          tryIt();
+        }
+    });
+  })();
 })(jQuery);
