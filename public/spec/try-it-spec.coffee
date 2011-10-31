@@ -90,7 +90,7 @@ describe "Sandbox", ->
       expect($('#specs')).not.toHaveClass('error')
 
     it "adds a trivial reporter to the jasmine environment", ->
-      expect(jsmin.getEnv().addReporter.mostRecentCall.args[0]).toEqual(new jsmin.TrivialReporter({
+      expect(jsmin.getEnv().addReporter.calls[0].args[0]).toEqual(new jsmin.TrivialReporter({
         location: window.document.location,
         body: $specRunner[0]
       }))
