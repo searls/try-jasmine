@@ -7534,16 +7534,16 @@ canon.addCommand({
     bindKey: bindKey("Ctrl-D", "Command-D"),
     exec: function(env, args, request) { env.editor.removeLines(); }
 });
-// canon.addCommand({
-//     name: "gotoline",
-//     bindKey: bindKey("Ctrl-L", "Command-L"),
-//     exec: function(env, args, request) {
-//         var line = parseInt(prompt("Enter line number:"));
-//         if (!isNaN(line)) {
-//             env.editor.gotoLine(line);
-//         }
-//     }
-// });
+canon.addCommand({
+    name: "gotoline",
+    bindKey: bindKey("Ctrl-L", "Command-L"),
+    exec: function(env, args, request) {
+        var line = parseInt(prompt("Enter line number:"));
+        if (!isNaN(line)) {
+            env.editor.gotoLine(line);
+        }
+    }
+});
 canon.addCommand({
     name: "togglecomment",
     bindKey: bindKey("Ctrl-7", "Command-7"),
