@@ -3,6 +3,22 @@ body {
   background-color: #e9e9e9;
 }
 
+.passing {
+  background-color: #cfc;
+}
+
+.body-wrap.passing-border {
+  border: 1px solid #42a642;
+}
+
+.failing {
+  background-color: #fbb;
+}
+
+.body-wrap.failing-border {
+  border: 1px solid #a63d3d;
+}
+
 .body-wrap {
   width: 960px;
   margin: 0 auto;

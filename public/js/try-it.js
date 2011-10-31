@@ -18,6 +18,7 @@
         location: window.document.location,
         body: $('.spec-runner')[0]
       }));
+      self.jasmine.getEnv().addReporter(new StylishReporter());
       editors.each(function(editor) {
         self.execute(editor);
       });
@@ -208,4 +209,13 @@
         }
     });
   })();
+
+  var StylishReporter = function() {};
+  StylishReporter.prototype.reportRunnerResults = function() {
+    var passed = $('.runner-wrap .runner').hasClass('passed');
+    $('body').toggleClass('passing',passed);
+    $('body').toggleClass('failing',!passed);
+    $('.body-wrap').toggleClass('passing-border',passed);
+    $('.body-wrap').toggleClass('failing-border',!passed);
+  };
 })(jQuery);
