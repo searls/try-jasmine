@@ -7,7 +7,8 @@
         cssClass:'',
         id:'',
         text: '',
-        defaultAttribute: 'class'
+        defaultAttribute: 'class',
+        attrs: {}
       };
 
   window.jasmineFixture = function($) {
@@ -49,10 +50,10 @@
     };
 
     var applyAttributes = function($html,config) {
-      var attrs = {
+      var attrs = $.extend({},{
         id: config.id,
         'class': config['class'] || config.cssClass
-      };
+      }, config.attrs);
       if(isString(config.userString)) {
         attrs[config.defaultAttribute] = config.userString;
       }
@@ -84,7 +85,7 @@
     $(function(jQuery){
       init();
     });
-    afterEach(function(){
+    beforeEach(function(){
       tidyUp();
     });
 
@@ -92,6 +93,7 @@
   };
 
   if(jQuery) {
-    window.jasmineFixture(jQuery)
+    var jasmineFixture = window.jasmineFixture(jQuery);
+    window.inject = window.inject || jasmineFixture.inject;
   }
 })(jQuery);
