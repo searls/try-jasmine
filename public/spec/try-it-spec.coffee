@@ -166,7 +166,6 @@ describe "Sandbox", ->
         it "throws both errors so they hit the user's console", ->
           expect(thrown).toBe('''
                               JavaScript Parse Error: :(
-
                               CoffeeScript Compile Error: :(
                               ''')
 

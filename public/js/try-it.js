@@ -35,10 +35,11 @@
           self.eval(CoffeeScript.compile(script, { bare: true }));
           editors.setMode('coffee');
         } catch(coffeeError) {
-          showError(editor.name);
-          throw 'JavaScript Parse Error: '+javaScriptError+
-                '\n\n'+
-                'CoffeeScript Compile Error: '+coffeeError;
+          var fullError = 'JavaScript Parse Error: '+javaScriptError+
+                          '<br/>'+
+                          'CoffeeScript Compile Error: '+coffeeError
+          showError(editor.name,fullError);
+          throw fullError.replace(/\<br\/\>/g,"\n");
         }
       }
     };
@@ -48,8 +49,11 @@
       $('.error, .runner-wrap').removeClass('error');
     };
 
-    var showError = function(name) {
-      $('.flash').fadeIn().append("<li>Uh oh, it looks like your JavaScript "+(name === 'specs' ? 'specs have' : 'source has')+" a parse error!</li>");
+    var showError = function(name,fullError) {
+      $('.flash').fadeIn().append("<li>Uh oh, it looks like your JavaScript "+(name === 'specs' ? 'specs have' : 'source has')+" a parse error!"+
+          "<br/><br/>"+
+          "<code>"+fullError+"</code>"+
+          "</li>");
       $('.runner-wrap, #'+name).addClass('error');
     };
 
