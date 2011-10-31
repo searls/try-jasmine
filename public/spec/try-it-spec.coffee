@@ -1,13 +1,13 @@
-ogMode=ogSpecs=ogSrc=null
+ogSpecs=ogSrc=null
 beforeEach ->
-  ogMode=localStorage['editorMode'] if localStorage['editorMode']
   ogSpecs=localStorage['specs'] if localStorage['specs']
   ogSrc=localStorage['src'] if localStorage['src']
 
 afterEach ->
-  localStorage['editorMode'] = ogMode if ogMode
+  delete localStorage['editorMode']
   localStorage['specs'] = ogSpecs if ogSpecs
   localStorage['src'] = ogSrc if ogSrc
+
 
 
 describe ".tryIt", ->
