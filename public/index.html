@@ -9,10 +9,11 @@
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   <script type="text/javascript" src="js/vendor/underscore-min.js"></script>
   <script type="text/javascript" src="js/vendor/coffee-script.js"></script>
-  <script type="text/javascript" src="js/try-it.js"></script>
   <script type="text/javascript" src="js/vendor/ace/ace-uncompressed.js"></script>
   <script type="text/javascript" src="js/vendor/ace/mode-coffee.js"></script>
   <script type="text/javascript" src="js/vendor/ace/mode-javascript.js"></script>
+  <script type="text/javascript" src="js/vendor/js2coffee.min.js"></script>
+  <script type="text/javascript" src="js/try-it.js"></script>
   <script type="text/javascript">
     jQuery(function($){
       $('#specs').codeBox();
@@ -31,7 +32,6 @@
           <span>mac: &#x2318;-return, windows: ctrl-enter </span>
         </div>
         <div class="page-tools">
-          <a class="coffee button" href="#">see CoffeeScript</a>
           <a class="clear-saved hidden button negative" href="#">clear saved specs</a>
         </div>
       </div>
@@ -54,35 +54,49 @@
       <div class="flash hidden"></div>
       </div>
       <div class="content-wrap">
-      <div class="source-wrap">
-        <label for="specs">specs</label>
-        <div class="macros">
-          <span>macros</span>
-          <a href="#" class="button insert" data-snippet="describe('Thing',function(){});">describe</a>
-          <a href="#" class="button insert" data-snippet="it('does something',function(){});">it</a>
-          <a href="#" class="button insert" data-snippet="expect(true).toBe(true);">expect</a>
-          <a href="#" class="button insert" data-snippet="spyOn(object,'methodName');">spyOn</a>
-          <a href="#" class="button insert" data-snippet="beforeEach(function(){});">beforeEach</a>
+        <div class="runner-notice"></div>
+        <div class="meta">
+          <div class="macros">
+            <span>macros</span>
+            <a href="#" class="button insert" data-snippet="describe('Thing',function(){});">describe</a>
+            <a href="#" class="button insert" data-snippet="it('does something',function(){});">it</a>
+            <a href="#" class="button insert" data-snippet="expect(true).toBe(true);">expect</a>
+            <a href="#" class="button insert" data-snippet="spyOn(object,'methodName');">spyOn</a>
+            <a href="#" class="button insert" data-snippet="beforeEach(function(){});">beforeEach</a>
+          </div>
+
+          <div class="coffee-controls">
+            <span>convert</span>
+            <a class="coffee button" href="#">JavaScript &rArr; CoffeeScript</a>
+            <a class="coffee2js button" href="#">CoffeeScript &rArr; JavaScript</a>
+            <span class="editor-mode">
+              <label for="mode-select">edit in</label>
+              <select id="mode-select">
+                <option value="javascript">JavaScript mode</option>
+                <option value="coffee">CoffeeScript mode</option>
+              </select>
+            </span>
+          </div>
         </div>
-        <div id="spec-editor-wrapper" class="editor-wrapper">
-                <div id="specs" class="editor source"></div>
+        <div class="source-wrap">
+          <label for="specs">specs</label>
+
+          <div id="spec-editor-wrapper" class="editor-wrapper">
+                  <div id="specs" class="editor source"></div>
+          </div>
+        	<label for="src">source</label>
+          <div id="source-editor-wrapper" class="editor-wrapper">
+                  <div id="src" class="editor source"></div>
+          </div>
         </div>
-      	<label for="src">source</label>
-        <div id="source-editor-wrapper" class="editor-wrapper">
-                <div id="src" class="editor source"></div>
+        <div class="runner-wrap">
+          <div class="label">results</div>
+          <div class="spec-runner">
+            <div class="hint">
+              <a class="hint try-it button" href="#">click "try jasmine!" in the top-left corner of the page</a>
+            </div>
+          </div>
         </div>
-        <label for="mode-select">Edit in</label>
-        <select id="mode-select">
-          <option value="javascript">JavaScript Mode</option>
-          <option value="coffee">CoffeeScript Mode</option>
-        </select>
-      </div>
-      <div class="runner-wrap">
-        <div class="label">results</div>
-        <div class="spec-runner">
-          <a class="hint try-it button" href="#">click "try jasmine!" in the top-left corner of the page</a>
-        </div>
-      </div>
       </div>
       <div class="foot-wrap">
       <div class="help">
@@ -112,14 +126,7 @@
   <pre class="template" id="default-src">
     panda = 'sad';
   </pre>
-  <pre class="template coffee" id="default-coffee-specs">
-describe 'panda', ->
-  it 'is happy', ->
-    expect(panda).toBe('happy')
-  </pre>
-  <pre class="template coffee" id="default-coffee-src">
-    panda = 'sad'
-  </pre>
+
   <script type="text/html" class="template sandbox">
     <iframe id="sandbox" src="sandbox.html"></iframe>
   </script>

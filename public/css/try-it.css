@@ -3,6 +3,22 @@ body {
   background-color: #e9e9e9;
 }
 
+.passing {
+  background-color: #cfc;
+}
+
+.body-wrap.passing-border {
+  border: 1px solid #42a642;
+}
+
+.failing {
+  background-color: #fbb;
+}
+
+.body-wrap.failing-border {
+  border: 1px solid #a63d3d;
+}
+
 .body-wrap {
   width: 960px;
   margin: 0 auto;
@@ -50,9 +66,11 @@ label,.label {
 }
 
 a.try-it.hint {
-  font-size: 14px;
-  margin-top: 20px;
-  margin-left: 40px;
+  font-size: 18px;
+}
+
+.hint {
+  text-align: center;
 }
 
 .head-wrap .links-summary {
@@ -82,23 +100,35 @@ a.try-it.hint {
   overflow: hidden;
 }
 
-.macros {
+.meta {
+  margin: 5px 0px 5px 0px;
+  padding-bottom: 20px;
+}
+
+.coffee-controls {
   font-size: 0.9em;
   color: #888;
   float:right;
 }
 
+.macros {
+  font-size: 0.9em;
+  color: #888;
+  float:left;
+}
+
 .source-wrap {
-  clear: left;
-  float: left;
-  width: 475px;
-  display: inline;
+  margin: 20px 0px 5px 0px;
+  clear: both;
+}
+
+.editor-mode {
+  font-size: 0.9em;
+  color: #888;
 }
 
 .runner-wrap {
-  float: right;
-  width: 475px;
-  display: inline;
+  margin: 5px 0px 5px 0px;
 }
 
 .spec-runner {
@@ -149,10 +179,9 @@ iframe {
 
 .editor {
   margin: 0px;
-  float: left;
-  width: 475px;
+  width: 940px;
   height: 300px;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .editor-wrapper {

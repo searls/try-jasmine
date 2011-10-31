@@ -18,6 +18,7 @@
         location: window.document.location,
         body: $('.spec-runner')[0]
       }));
+      self.jasmine.getEnv().addReporter(new StylishReporter());
       editors.each(function(editor) {
         self.execute(editor);
       });
@@ -75,13 +76,18 @@
       });
     },
     goCoffee: function() {
-      if(editors.all(function(e) { return templates.stillDefault(e); })
-        || confirm('overwrite your code with a sampling of CoffeeScript?')) {
-        editors.each(function(editor) {
-          editors.setMode('coffee')  ;
-          editor.getSession().setValue(templates.getDefault('coffee-'+editor.name));
-        });
-      }
+      editors.setMode('coffee');
+      editors.each(function(editor) {
+        var coffee = Js2coffee.build(editor.getSession().getValue());
+        editor.getSession().setValue(coffee);
+      });
+    },
+    goJavaScript: function() {
+      editors.setMode('javascript');
+      editors.each(function(editor) {
+        var js = CoffeeScript.compile(editor.getSession().getValue(), { bare: "on" });
+        editor.getSession().setValue(js);
+      });
     }
   };
 
@@ -93,10 +99,12 @@
     editor.getSession().setTabSize(2)
     editor.getSession().setUseSoftTabs(true);
     editor.switchMode = function(name) {
+      localStorage['editorMode'] = name;
+      $('#mode-select').val(name);
       var mode = require("ace/mode/"+name).Mode;
       editor.getSession().setMode(new mode());
     };
-    editor.switchMode('javascript');
+    editor.switchMode(localStorage['editorMode'] || 'javascript');
     $this.data('editor',editor);
     return $this;
   };
@@ -157,6 +165,9 @@
   clicker('.coffee.button',function() {
     templates.goCoffee();
   });
+  clicker('.coffee2js.button',function(){
+    templates.goJavaScript();
+  });
 
   var loadGists = (function() {
     var idMatches = window.location.search.match(/gist=(\d*)/);
@@ -182,4 +193,29 @@
       })
     }
   })();
+
+  var hackAceKeyboardShortcuts = (function() {
+    var canon = require('pilot/canon')
+    canon.removeCommand("gotoline");
+    canon.addCommand({
+        name: "donothingsave",
+        bindKey: {
+          win: 'Ctrl-S',
+          mac: 'Command-S',
+          sender: 'editor'
+        },
+        exec: function(env, args, request) {
+          tryIt();
+        }
+    });
+  })();
+
+  var StylishReporter = function() {};
+  StylishReporter.prototype.reportRunnerResults = function() {
+    var passed = $('.runner-wrap .runner').hasClass('passed');
+    $('body').toggleClass('passing',passed);
+    $('body').toggleClass('failing',!passed);
+    $('.body-wrap').toggleClass('passing-border',passed);
+    $('.body-wrap').toggleClass('failing-border',!passed);
+  };
 })(jQuery);
