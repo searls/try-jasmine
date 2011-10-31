@@ -123,6 +123,7 @@ a.try-it.hint {
 }
 
 .editor-mode {
+  margin-left: 10px;
   font-size: 0.9em;
   color: #888;
 }

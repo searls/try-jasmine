@@ -160,6 +160,7 @@
       delete localStorage[name];
     });
     $(this).hide();
+    editors.setMode('javascript');
     templates.init();
   });
   clicker('.coffee.button',function() {
