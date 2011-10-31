@@ -84,17 +84,31 @@ a.try-it.hint {
   overflow: hidden;
 }
 
-.macros {
+.meta {
+  margin: 5px 0px 5px 0px;
+  padding-bottom: 20px;
+}
+
+.coffee-controls {
   font-size: 0.9em;
   color: #888;
   float:right;
 }
 
-.editor-mode {
-  margin-left: 20px;
+.macros {
   font-size: 0.9em;
   color: #888;
-  float:right;
+  float:left;
+}
+
+.source-wrap {
+  margin: 20px 0px 5px 0px;
+  clear: both;
+}
+
+.editor-mode {
+  font-size: 0.9em;
+  color: #888;
 }
 
 .runner-wrap {
@@ -151,7 +165,7 @@ iframe {
   margin: 0px;
   width: 940px;
   height: 300px;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .editor-wrapper {

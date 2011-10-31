@@ -260,58 +260,21 @@ describe "templates", ->
       spyOn(window, "confirm")
       spyOn(templates, "stillDefault")
       spyOn(templates, "getDefault").andCallFake((name, specEditor) -> name)
+      templates.stillDefault.andReturn(true)
+      spyOn(Js2coffee, "build").andReturn('yay coffee');
+      templates.goCoffee()
 
-    itOverwritesScripts = ->
-      it "sets coffee mode", ->
-        expect($modeSelect).toHaveValue('coffee')
+      $editorValue = specEditor.getSession().getValue()
+      $sourceValue = sourceEditor.getSession().getValue()
 
-      it "overwrites the specs", ->
-        expect($editorValue).toBe('coffee-specs')
+    it "sets coffee mode", ->
+      expect($modeSelect).toHaveValue('coffee')
 
-      it "overwrites the src", ->
-        expect($sourceValue).toBe('coffee-src')
+    it "overwrites the specs", ->
+      expect($editorValue).toBe('yay coffee')
 
-    context "when specs and src are still default", ->
-      beforeEach ->
-        templates.stillDefault.andReturn(true)
-        templates.goCoffee()
-        $editorValue = specEditor.getSession().getValue()
-        $sourceValue = sourceEditor.getSession().getValue()
-
-      it "does not display a confirm", ->
-        expect(window.confirm).not.toHaveBeenCalled()
-
-      itOverwritesScripts()
-
-    context "when specs and src have been customized", ->
-      beforeEach ->
-        templates.stillDefault.andReturn(false)
-        templates.goCoffee()
-        $editorValue = specEditor.getSession().getValue()
-        $sourceValue = sourceEditor.getSession().getValue()
-
-      it "displays a confirm", ->
-        expect(window.confirm).toHaveBeenCalledWith('overwrite your code with a sampling of CoffeeScript?')
-
-      context "when the user confirms", ->
-        beforeEach ->
-          window.confirm.andReturn(true)
-          templates.goCoffee()
-          $editorValue = specEditor.getSession().getValue()
-          $sourceValue = sourceEditor.getSession().getValue()
-
-        itOverwritesScripts()
-
-      context "when the user rejects", ->
-        beforeEach ->
-          window.confirm.andReturn(false)
-          templates.goCoffee()
-
-        it "leaves specs as-is", ->
-          expect(specEditor.getSession().getValue()).toBe('')
-
-        it "leaves src as-is", ->
-          expect(sourceEditor.getSession().getValue()).toBe('')
+    it "overwrites the src", ->
+      expect($sourceValue).toBe('yay coffee')
 
 describe "~ user interface events", ->
   describe "changing the mode selector", ->

@@ -75,13 +75,18 @@
       });
     },
     goCoffee: function() {
-      if(editors.all(function(e) { return templates.stillDefault(e); })
-        || confirm('overwrite your code with a sampling of CoffeeScript?')) {
-        editors.each(function(editor) {
-          editors.setMode('coffee')  ;
-          editor.getSession().setValue(templates.getDefault('coffee-'+editor.name));
-        });
-      }
+      editors.setMode('coffee');
+      editors.each(function(editor) {
+        var coffee = Js2coffee.build(editor.getSession().getValue());
+        editor.getSession().setValue(coffee);
+      });
+    },
+    goJavaScript: function() {
+      editors.setMode('javascript');
+      editors.each(function(editor) {
+        var js = CoffeeScript.compile(editor.getSession().getValue(), { bare: "on" });
+        editor.getSession().setValue(js);
+      });
     }
   };
 
@@ -158,6 +163,9 @@
   });
   clicker('.coffee.button',function() {
     templates.goCoffee();
+  });
+  clicker('.coffee2js.button',function(){
+    templates.goJavaScript();
   });
 
   var loadGists = (function() {

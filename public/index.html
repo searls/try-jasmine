@@ -32,7 +32,6 @@
           <span>mac: &#x2318;-return, windows: ctrl-enter </span>
         </div>
         <div class="page-tools">
-          <a class="coffee button" href="#">see CoffeeScript</a>
           <a class="clear-saved hidden button negative" href="#">clear saved specs</a>
         </div>
       </div>
@@ -56,15 +55,7 @@
       </div>
       <div class="content-wrap">
         <div class="runner-notice"></div>
-        <div class="source-wrap">
-          <label for="specs">specs</label>
-          <div class="editor-mode">
-            <label for="mode-select">edit in</label>
-            <select id="mode-select">
-              <option value="javascript">JavaScript mode</option>
-              <option value="coffee">CoffeeScript mode</option>
-            </select>
-          </div>
+        <div class="meta">
           <div class="macros">
             <span>macros</span>
             <a href="#" class="button insert" data-snippet="describe('Thing',function(){});">describe</a>
@@ -73,6 +64,22 @@
             <a href="#" class="button insert" data-snippet="spyOn(object,'methodName');">spyOn</a>
             <a href="#" class="button insert" data-snippet="beforeEach(function(){});">beforeEach</a>
           </div>
+
+          <div class="coffee-controls">
+            <a class="coffee button" href="#">js2coffee</a>
+            <a class="coffee2js button" href="#">coffee2js</a>
+            <span class="editor-mode">
+              <label for="mode-select">edit in</label>
+              <select id="mode-select">
+                <option value="javascript">JavaScript mode</option>
+                <option value="coffee">CoffeeScript mode</option>
+              </select>
+            </span>
+          </div>
+        </div>
+        <div class="source-wrap">
+          <label for="specs">specs</label>
+
           <div id="spec-editor-wrapper" class="editor-wrapper">
                   <div id="specs" class="editor source"></div>
           </div>
@@ -118,14 +125,7 @@
   <pre class="template" id="default-src">
     panda = 'sad';
   </pre>
-  <pre class="template coffee" id="default-coffee-specs">
-describe 'panda', ->
-  it 'is happy', ->
-    expect(panda).toBe('happy')
-  </pre>
-  <pre class="template coffee" id="default-coffee-src">
-    panda = 'sad'
-  </pre>
+
   <script type="text/html" class="template sandbox">
     <iframe id="sandbox" src="sandbox.html"></iframe>
   </script>
