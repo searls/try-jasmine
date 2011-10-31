@@ -93,10 +93,12 @@
     editor.getSession().setTabSize(2)
     editor.getSession().setUseSoftTabs(true);
     editor.switchMode = function(name) {
+      localStorage['editorMode'] = name;
+      $('#mode-select').val(name);
       var mode = require("ace/mode/"+name).Mode;
       editor.getSession().setMode(new mode());
     };
-    editor.switchMode('javascript');
+    editor.switchMode(localStorage['editorMode'] || 'javascript');
     $this.data('editor',editor);
     return $this;
   };
