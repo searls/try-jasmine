@@ -395,6 +395,10 @@ describe "$.fn.codeBox", ->
   it "enables soft tabs (spaces instead of tabulators)", ->
     expect(editor.getSession().setUseSoftTabs).toHaveBeenCalledWith(true)
 
+  it "disables print margins", ->
+    expect(editor.renderer.setShowPrintMargin).toHaveBeenCalledWith(false)
+
+
   behavesLikeItSwitchesModes = (name) ->
     it "requires the #{name} mode", ->
       expect(require.callCount).toBe(1)
@@ -437,5 +441,8 @@ fakeEditorObject = (id) ->
     setTheme: jasmine.createSpy('#setTheme'),
     switchMode: jasmine.createSpy('#switchMode'),
     insert: jasmine.createSpy('#insert'),
+    renderer: {
+      setShowPrintMargin: jasmine.createSpy('#setShowPrintMargin')
+    }
     getSession: -> session
   }
