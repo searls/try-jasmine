@@ -7250,7 +7250,13 @@ var MouseHandler = function(editor) {
         var speed = this.$scrollSpeed * 2;
 
         this.editor.renderer.scrollBy(e.wheelX * speed, e.wheelY * speed);
-        return event.preventDefault(e);
+        //return event.preventDefault(e);
+        var scrollUnderTop = this.editor.renderer.scrollTop > 0
+            scrollAboveBottom = this.editor.renderer.$size.height + this.editor.renderer.scrollTop < this.editor.renderer.scrollBar.inner.scrollHeight;
+        if(scrollUnderTop && scrollAboveBottom) {
+          return event.preventDefault(e);
+        }
+
     };
 
 
