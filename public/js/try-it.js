@@ -37,7 +37,7 @@
         } catch(coffeeError) {
           var fullError = 'JavaScript Parse Error: '+javaScriptError+
                           '<br/>'+
-                          'CoffeeScript Compile Error: '+coffeeError
+                          'CoffeeScript Compile Error: '+coffeeError;
           showError(editor.name,fullError);
           throw fullError.replace(/\<br\/\>/g,"\n");
         }
@@ -100,7 +100,7 @@
     var editor = ace.edit($this.attr('id'));
     editor.name = $this.attr('id');
     editor.setTheme("ace/theme/textmate");
-    editor.getSession().setTabSize(2)
+    editor.getSession().setTabSize(2);
     editor.getSession().setUseSoftTabs(true);
     editor.renderer.setShowPrintMargin(false);
     editor.switchMode = function(name) {
@@ -139,7 +139,7 @@
 
   //Eventy stuff
   $('html, body').add(document.body).keydown(function(e){
-    if(e.which == 13 && (e.ctrlKey || e.metaKey)) {
+    if(e.which === 13 && (e.ctrlKey || e.metaKey)) {
       e.preventDefault();
       tryIt();
     }
@@ -150,11 +150,11 @@
     editors.each(function(editor) {
       editor.switchMode($sel.val());
     });
-  })
+  });
   var clicker = function(selector,action) {
     $(selector).live('click',function(e) {
       e.preventDefault();
-      action.apply(this,[e])
+      action.apply(this,[e]);
     });
   };
   clicker('.try-it.button',function() {
@@ -202,12 +202,12 @@
           editors.get("specs").getSession().setValue(specs);
           editors.get("src").getSession().setValue(src);
         });
-      })
+      });
     }
   })();
 
   var hackAceKeyboardShortcuts = (function() {
-    var canon = require('pilot/canon')
+    var canon = require('pilot/canon');
     canon.removeCommand("gotoline");
     canon.addCommand({
         name: "donothingsave",
