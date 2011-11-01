@@ -1,8 +1,16 @@
 src_files:
   - "public/spec/vendor/**/*.{js,coffee}"
-  - "public/js/vendor/ace/**/*.{js,coffee}"
-  - "public/js/vendor/*.{js,coffee}"
-  - "public/js/*.{js,coffee}"
+  - "public/js/vendor/underscore-min.js"
+  - "public/js/vendor/jasmine-fixture-0.0.7.js"
+  - "public/js/vendor/jasmine-stealth-0.0.1.js"
+  - "public/js/vendor/jasmine-jquery-1.3.1.js"
+  - "public/js/vendor/coffee-script.js"
+  - "public/js/spec-helper.js"
+  - "public/js/vendor/ace/ace-uncompressed.js"
+  - "public/js/vendor/ace/mode-coffee.js"
+  - "public/js/vendor/ace/mode-javascript.js"
+  - "public/js/vendor/js2coffee.min.js"
+  - "public/js/try-it.js"
 
 stylesheets:
 
