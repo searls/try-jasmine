@@ -177,6 +177,9 @@
   clicker('.coffee2js.button',function(){
     templates.goJavaScript();
   });
+  clicker('.scroll-to-results',function() {
+    window.scrollTo(0,$('.jasmine_reporter').offset().top);
+  });
 
   var loadGists = (function() {
     var idMatches = window.location.search.match(/gist=(\d*)/);
@@ -230,5 +233,9 @@
     $('body').toggleClass('failing',!passed);
     $('.body-wrap').toggleClass('passing-border',passed);
     $('.body-wrap').toggleClass('failing-border',!passed);
+
+    $('.runner-notice').html($('.jasmine_reporter .runner .description').text()+' (<a class="scroll-to-results">see results</a>)')
+      .toggleClass('passing',passed)
+      .toggleClass('failing',!passed);
   };
 })(jQuery);

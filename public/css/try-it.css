@@ -39,7 +39,7 @@ label,.label {
 }
 
 .head-wrap {
-  padding: 10px 10px 25px 10px;
+  padding: 10px 10px 0px 10px;
 }
 
 .head-wrap .head-top-wrap {
@@ -73,16 +73,11 @@ a.try-it.hint {
   text-align: center;
 }
 
-.links-summary {
-  text-align: center;
-}
-
-.links {
-  text-align: center;
-}
-
-.links a {
-  font-size: 1.1em;
+.runner-notice {
+  font-size: .8em;
+  color: #333;
+  padding: 5px;
+  cursor: pointer;
 }
 
 .head-wrap .flash {
@@ -167,6 +162,19 @@ pre.template {
 iframe {
   display: none;
 }
+
+.links-summary {
+  text-align: center;
+}
+
+.links {
+  text-align: center;
+}
+
+.links a {
+  font-size: 1.1em;
+}
+
 
 .foot-wrap {
   margin-top: 10px;
