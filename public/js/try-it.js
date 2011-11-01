@@ -217,6 +217,10 @@
   })();
 
   var StylishReporter = function() {};
+  StylishReporter.prototype.reportRunnerStarting = function() {
+    $('body').removeClass();
+    $('.body-wrap').removeClass('passing-border','failing-border');
+  };
   StylishReporter.prototype.reportRunnerResults = function() {
     var passed = $('.runner-wrap .runner').hasClass('passed');
     $('body').toggleClass('passing',passed);
