@@ -73,15 +73,15 @@ a.try-it.hint {
   text-align: center;
 }
 
-.head-wrap .links-summary {
+.links-summary {
   text-align: center;
 }
 
-.head-wrap .links {
+.links {
   text-align: center;
 }
 
-.head-wrap .links a {
+.links a {
   font-size: 1.1em;
 }
 
@@ -123,7 +123,7 @@ a.try-it.hint {
 }
 
 .editor-mode {
-  margin-left: 10px;
+  margin-left: 30px;
   font-size: 0.9em;
   color: #888;
 }
@@ -166,6 +166,10 @@ pre.template {
 
 iframe {
   display: none;
+}
+
+.foot-wrap {
+  margin-top: 10px;
 }
 
 .foot-wrap .who {

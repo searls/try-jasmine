@@ -119,6 +119,9 @@
     get: function(name) {
       return $('#'+name).data('editor');
     },
+    getMode: function() {
+      return $('#mode-select').val();
+    },
     setMode: function(name) {
       $('#mode-select').val(name).trigger('change');
     },
@@ -158,7 +161,7 @@
     tryIt();
   });
   clicker('.button.insert',function() {
-    editors.get('specs').insert($(this).data('snippet'));
+    editors.get('specs').insert($(this).data(editors.getMode()+'-snippet'));
   });
   clicker('.clear-saved',function() {
     _(editors.names).each(function(name) {

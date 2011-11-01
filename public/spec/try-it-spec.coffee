@@ -302,9 +302,10 @@ describe "~ user interface events", ->
   describe "hitting a snippet button", ->
     snippet=specEditor=result=null
     beforeEach ->
+      inject({id: 'mode-select', el: 'input', attrs: { value: 'javascript'}});
       specEditor = fakeEditor('specs')
       snippet = '1337 codez'
-      $("<span class='button insert' data-snippet='#{snippet}'></span>").trigger('click')
+      $("<span class='button insert' data-javascript-snippet='#{snippet}'></span>").trigger('click')
       result = specEditor.getSession().getValue()
 
     it "inserts the snippet", ->

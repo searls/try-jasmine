@@ -35,22 +35,6 @@
           <a class="clear-saved hidden button negative" href="#">clear saved specs</a>
         </div>
       </div>
-      <div class="links-summary">
-        included scripts
-      </div>
-      <div class="links">
-        <a href="https://github.com/pivotal/jasmine/wiki">jasmine</a>
-        &#x2601;
-        <a href="http://jquery.com">jquery</a>
-        &#x2601;
-        <a href="http://jashkenas.github.com/coffee-script/">coffee-script</a>
-        &#x2601;
-        <a href="https://github.com/velesin/jasmine-jquery">jasmine-jquery</a>
-        &#x2601;
-        <a href="https://github.com/searls/jasmine-fixture">jasmine-fixture</a>
-        &#x2601;
-        <a href="https://github.com/searls/jasmine-stealth">jasmine-stealth</a>
-      </div>
       <div class="flash hidden"></div>
       </div>
       <div class="content-wrap">
@@ -58,11 +42,11 @@
         <div class="meta">
           <div class="macros">
             <span>macros</span>
-            <a href="#" class="button insert" data-snippet="describe('Thing',function(){});">describe</a>
-            <a href="#" class="button insert" data-snippet="it('does something',function(){});">it</a>
-            <a href="#" class="button insert" data-snippet="expect(true).toBe(true);">expect</a>
-            <a href="#" class="button insert" data-snippet="spyOn(object,'methodName');">spyOn</a>
-            <a href="#" class="button insert" data-snippet="beforeEach(function(){});">beforeEach</a>
+            <a href="#" class="button insert" data-javascript-snippet="describe('Thing',function(){});" data-coffee-snippet="describe 'Thing', ->">describe</a>
+            <a href="#" class="button insert" data-javascript-snippet="it('does something',function(){});" data-coffee-snippet="it 'does something', ->">it</a>
+            <a href="#" class="button insert" data-javascript-snippet="expect(true).toBe(true);" data-coffee-snippet="expect(true).toBe true">expect</a>
+            <a href="#" class="button insert" data-javascript-snippet="spyOn(object,'methodName');" data-coffee-snippet="spyOn(object,'methodName')">spyOn</a>
+            <a href="#" class="button insert" data-javascript-snippet="beforeEach(function(){});" data-coffee-snippet="beforeEach ->">beforeEach</a>
           </div>
 
           <div class="coffee-controls">
@@ -99,16 +83,32 @@
         </div>
       </div>
       <div class="foot-wrap">
-      <div class="help">
-        <ul>
-          <li>compiles and runs CoffeeScript. You can even mix-and-match (say, CoffeeScript specs for JavaScript sources)</li>
-          <li>running specs will save them in localStorage so you don't lose them (a button will appear, allowing you to clear it)</li>
-          <li>thanks to <a href="http://twitter.com/carinmeier">Carin Meier</a> for investing the effort to add <a href="http://ace.ajax.org/">ace boxes</a>.</li>
-          <li>the macro buttons will insert text wherever your cursor was last located in the "specs" field</li>
-          <li>if you live in java-land, I wrote a <a href="http://github.com/searls/jasmine-maven-plugin">maven plugin</a> for running your Jasmine specs in continuous integration</li>
-          <li>feel free to review the <a href="spec.html">specs for try-jasmine itself</a></li>
-        </ul>
-      </div>
+        <div class="links-summary">
+          included scripts
+        </div>
+        <div class="links">
+          <a href="https://github.com/pivotal/jasmine/wiki">jasmine</a>
+          &#x2601;
+          <a href="http://jquery.com">jquery</a>
+          &#x2601;
+          <a href="http://jashkenas.github.com/coffee-script/">coffee-script</a>
+          &#x2601;
+          <a href="https://github.com/velesin/jasmine-jquery">jasmine-jquery</a>
+          &#x2601;
+          <a href="https://github.com/searls/jasmine-fixture">jasmine-fixture</a>
+          &#x2601;
+          <a href="https://github.com/searls/jasmine-stealth">jasmine-stealth</a>
+        </div>
+        <div class="help">
+          <ul>
+            <li>compiles and runs CoffeeScript. You can even mix-and-match (say, CoffeeScript specs for JavaScript sources)</li>
+            <li>running specs will save them in localStorage so you don't lose them (a button will appear, allowing you to clear it)</li>
+            <li>thanks to <a href="http://twitter.com/carinmeier">Carin Meier</a> for investing the effort to add <a href="http://ace.ajax.org/">ace boxes</a>.</li>
+            <li>the macro buttons will insert text wherever your cursor was last located in the "specs" field</li>
+            <li>if you live in java-land, I wrote a <a href="http://github.com/searls/jasmine-maven-plugin">maven plugin</a> for running your Jasmine specs in continuous integration</li>
+            <li>feel free to review the <a href="spec.html">specs for try-jasmine itself</a></li>
+          </ul>
+        </div>
       <div class="who">brought to you by <a href="http://twitter.com/searls">@searls</a> via <a href="http://pillartechnology.com">pillar</a></div>
     </div>
   </div>
