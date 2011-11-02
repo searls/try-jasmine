@@ -183,6 +183,9 @@
   clicker('.flip-editors',function() {
     $('.editor-wrapper').toggleClass('vertical');
     $('.editor').toggleClass('vertical');
+    editors.each(function(editor) {
+      editor.resize();
+    });
   });
 
   var loadGists = (function() {
