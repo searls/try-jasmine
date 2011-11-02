@@ -124,7 +124,7 @@ a.try-it.hint {
 }
 
 .runner-wrap {
-  margin: 5px 0px 5px 0px;
+  margin: 15px 0px 5px 0px;
 }
 
 .spec-runner {
@@ -201,4 +201,19 @@ iframe {
   width: 100%;
   height: 300px;
   margin: 10px;
+}
+
+
+.editor-vertical {
+  margin: 0px;
+  width: 460px;
+  height: 600px;
+  overflow: auto;
+}
+
+.editor-wrapper-vertical {
+  display: inline-block;
+  width: 460px;
+  height: 600px;
+  margin: 10px 5px 10px 5px;
 }
