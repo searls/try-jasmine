@@ -187,10 +187,11 @@
       $.getJSON('/gists/'+idMatches[1],function(json) {
         $(function() {
           var specs = '',
-              src = '';
+              src = '',
+              containsCoffee = false;
           _(json.files).each(function(file,name) {
             if(name.indexOf('.coffee') !== -1) {
-              editors.setMode('coffee');
+              containsCoffee = true;
             }
 
             if(name.match(/spec\.(js|coffee)/)) {
@@ -199,8 +200,11 @@
               src += file.content + '\n';
             }
           });
+          editors.setMode(containsCoffee? 'coffee' : 'javascript');
+
           editors.get("specs").getSession().setValue(specs);
           editors.get("src").getSession().setValue(src);
+
         });
       });
     }
