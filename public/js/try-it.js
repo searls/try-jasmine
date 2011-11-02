@@ -180,6 +180,10 @@
   clicker('.scroll-to-results',function() {
     window.scrollTo(0,$('.jasmine_reporter').offset().top);
   });
+  clicker('.flip-editors',function() {
+    $('.editor-wrapper').toggleClass('vertical');
+    $('.editor').toggleClass('vertical');
+  });
 
   var loadGists = (function() {
     var idMatches = window.location.search.match(/gist=(\d*)/);
