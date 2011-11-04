@@ -178,6 +178,7 @@
     templates.goJavaScript();
   });
   clicker('.scroll-to-results',function() {
+    $('#__jasmine_TrivialReporter_showPassed__').attr('checked','checked').trigger('click');
     window.scrollTo(0,$('.jasmine_reporter').offset().top);
   });
   clicker('.flip-editors',function() {
