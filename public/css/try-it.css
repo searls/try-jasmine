@@ -74,6 +74,7 @@ a.try-it.hint {
 }
 
 .runner-notice {
+  display: inline-block;
   font-size: .8em;
   color: #333;
   padding: 5px;

@@ -1,6 +1,6 @@
 (function($){
   window.tryIt = function() {
-    $('.spec-runner').html($('.loading.template').html());
+    $('.spec-runner,.runner-notice').removeClass('passing failing').html($('.loading.template').html());
     $('#sandbox').remove();
     $($('.sandbox.template').html()).appendTo('body').load(function() {
       $('.spec-runner').html('');
