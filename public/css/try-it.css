@@ -81,6 +81,11 @@ a.try-it.hint {
   cursor: pointer;
 }
 
+.runner-notice img {
+  height: 16px;
+  width: 16px;
+}
+
 .head-wrap .flash {
   margin-top: 10px;
   text-align: center;
