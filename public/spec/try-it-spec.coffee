@@ -2,6 +2,7 @@ ogSpecs=ogSrc=null
 beforeEach ->
   ogSpecs=localStorage['specs'] if localStorage['specs']
   ogSrc=localStorage['src'] if localStorage['src']
+  spyOn($.fn, "ready")
 
 afterEach ->
   delete localStorage['editorMode']

@@ -181,12 +181,17 @@
     window.scrollTo(0,$('.jasmine_reporter').offset().top);
   });
   clicker('.flip-editors',function() {
-    $('.editor-wrapper').toggleClass('vertical');
-    $('.editor').toggleClass('vertical');
+    arrangeEditors(localStorage['verticalSplit'] === "false" ? true : false)
+  });
+
+  var arrangeEditors = function(vertical) {
+    $('.editor-wrapper').toggleClass('vertical',vertical);
+    $('.editor').toggleClass('vertical',vertical);
     editors.each(function(editor) {
       editor.resize();
     });
-  });
+    localStorage['verticalSplit'] = vertical;
+  };
 
   var loadGists = (function() {
     var idMatches = window.location.search.match(/gist=(\d*)/);
@@ -249,4 +254,13 @@
       .toggleClass('passing',passed)
       .toggleClass('failing',!passed);
   };
+
+  if(!window.runningTryJasmineSpecs) {
+    $(document).ready(function(){
+      $('#specs').codeBox();
+      $('#src').codeBox();
+      templates.init();
+      arrangeEditors(localStorage['verticalSplit'] === "false" ? false : true);
+    });
+  }
 })(jQuery);
