@@ -209,7 +209,6 @@ iframe {
   margin: 30px 5px 30px 5px;
 }
 
-
 .editor.vertical {
   margin: 0px;
   width: 460px;
@@ -222,4 +221,22 @@ iframe {
   width: 460px;
   height: 600px;
   margin: 10px 5px 10px 5px;
+}
+
+.full-width .body-wrap {
+  width: 99%;
+}
+
+.full-width .editor, .full-width .editor.vertical {
+  width: 100%;
+}
+
+.full-width .editor-wrapper {
+  position: relative;
+  width: 98%;
+}
+
+.full-width .editor-wrapper.vertical {
+  position: relative;
+  width: 49%;
 }
