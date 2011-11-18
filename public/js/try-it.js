@@ -241,7 +241,7 @@
 
   var StylishReporter = function() {};
   StylishReporter.prototype.reportRunnerStarting = function() {
-    $('body').removeClass();
+    $('body').removeClass("failing", "passing");
     $('.body-wrap').removeClass('passing-border','failing-border');
   };
   StylishReporter.prototype.reportRunnerResults = function() {
