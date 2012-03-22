@@ -203,7 +203,7 @@
               src = '',
               containsCoffee = false;
           _(json.files).each(function(file,name) {
-            if(name.indexOf('.coffee') !== -1) {
+            if((name.indexOf('.coffee') !== -1) && (name.indexOf('.coffee') === name.length - 7)) {
               containsCoffee = true;
             }
 
