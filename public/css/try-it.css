@@ -223,20 +223,25 @@ iframe {
   margin: 10px 5px 10px 5px;
 }
 
-.full-width .body-wrap {
-  width: 99%;
-}
 
-.full-width .editor, .full-width .editor.vertical {
-  width: 100%;
-}
+@media all and (min-width: 1200px) {
 
-.full-width .editor-wrapper {
-  position: relative;
-  width: 98%;
-}
+  .full-width .body-wrap {
+    width: 99%;
+  }
 
-.full-width .editor-wrapper.vertical {
-  position: relative;
-  width: 49%;
+  .full-width .editor, .full-width .editor.vertical {
+    width: 100%;
+  }
+
+  .full-width .editor-wrapper {
+    position: relative;
+    width: 98%;
+  }
+
+  .full-width .editor-wrapper.vertical {
+    position: relative;
+    width: 49%;
+  }
+
 }
