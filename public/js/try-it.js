@@ -195,7 +195,7 @@
   };
 
   var loadGists = (function() {
-    var idMatches = window.location.search.match(/gist=(\d*)/);
+    var idMatches = window.location.search.match(/gist=(\w*)/);
     if(idMatches) {
       $.getJSON('/gists/'+idMatches[1],function(json) {
         $(function() {
