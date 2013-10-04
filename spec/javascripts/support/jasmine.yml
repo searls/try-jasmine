@@ -3,6 +3,7 @@ src_files:
   - "public/js/vendor/underscore-min.js"
   - "public/js/vendor/jasmine-fixture-0.0.8.js"
   - "public/js/vendor/jasmine-stealth-0.0.3.js"
+  - "public/js/vendor/jasmine-given-2.4.0"
   - "public/js/vendor/jasmine-jquery-1.3.1.js"
   - "public/js/vendor/coffee-script.js"
   - "public/js/spec-helper.js"
