@@ -8,5 +8,7 @@ get '/' do
 end
 
 get '/gists/:gist_id' do
-  HTTParty.get("https://api.github.com/gists/#{params[:gist_id]}").body
+  resp = HTTParty.get "https://api.github.com/gists/#{params[:gist_id]}",
+                      :headers => { 'User-Agent' => 'Try-Jasmine' }
+  resp.body
 end
