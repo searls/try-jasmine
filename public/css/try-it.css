@@ -20,7 +20,8 @@ body {
 }
 
 .body-wrap {
-  width: 960px;
+  width: 98%;
+  min-width: 960px;
   margin: 0 auto;
   background-color: #fff;
   border: 1px solid #e1e1e1;
@@ -198,7 +199,8 @@ iframe {
 
 .editor {
   margin: 0px;
-  width: 940px;
+  width: 98%;
+  min-width: 940px;
   height: 300px;
   overflow: auto;
 }
@@ -212,14 +214,16 @@ iframe {
 
 .editor.vertical {
   margin: 0px;
-  width: 460px;
+  width: 47%;
+  min-width: 460px;
   height: 600px;
   overflow: auto;
 }
 
 .editor-wrapper.vertical {
   display: inline-block;
-  width: 460px;
+  width: 48%;
+  min-width: 460px;
   height: 600px;
   margin: 10px 5px 10px 5px;
 }
