@@ -207,7 +207,7 @@
               containsCoffee = true;
             }
 
-            if(name.match(/spec\.(js|coffee)/)) {
+            if(name.match(/spec\.(js|coffee)/i)) {
               specs += file.content + '\n';
             } else {
               src += file.content + '\n';
